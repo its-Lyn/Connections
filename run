@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+BINARY=connections
+
+if [ "$1" == "debug" ]; then
+    make debug
+    ./out/debug/$BINARY
+
+    exit 0
+fi
+
+if [ "$1" == "release" ]; then
+    make release
+    ./out/release/$BINARY
+    
+    exit 0
+fi

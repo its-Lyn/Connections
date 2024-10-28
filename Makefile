@@ -1,33 +1,60 @@
 CC=clang
+EMCC=emcc
 
 INCLUDE=-Iinclude
 DEBUG=-fsanitize=address,undefined -g3
 LIBS=-lraylib
 
 OPTIONS=-Wall -Wextra -Werror -Wno-unused-parameter
-OPTIONS_WEB=-I$(RAYLIB_SRC) -L$(RAYLIB_SRC) -sUSE_GLFW=3 -sGL_ENABLE_GET_PROC_ADDRESS -DPLATFORM_WEB 
+OPTIONS_WEB=-I$(RAYLIB_SRC) -L$(RAYLIB_SRC) -sUSE_GLFW=3 -sGL_ENABLE_GET_PROC_ADDRESS -DPLATFORM_WEB
 
 SOURCES := $(shell find src -name '*.c')
 
-OUT_DEBUG=out/debug
-OUT_RELEASE=out/release
+SHELL_FILE=shell.html
+
+TARGET ?= desktop
+
+OUT_DEBUG=out/$(TARGET)/debug
+OUT_RELEASE=out/$(TARGET)/release
 BINARY=connections
 
-# TODO: Web (hi lily)
-
 debug:
+	# deleting output directory if it already exists
+	if test -d $(OUT_DEBUG); then\
+		rm -r $(OUT_DEBUG);\
+	fi
+
 	mkdir -p $(OUT_DEBUG)
 	cp -r assets $(OUT_DEBUG)/assets
 
-	$(CC) $(INCLUDE) $(OPTIONS) $(LIBS) $(DEBUG) $(SOURCES) -o $(OUT_DEBUG)/$(BINARY)
+
+ifeq ($(TARGET), desktop)
+	$(CC) $(OPTIONS) $(DEBUG) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_DEBUG)/$(BINARY)
+else ifeq ($(TARGET), web)
+	$(EMCC) $(OPTIONS) $(OPTIONS_WEB) $(DEBUG) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_DEBUG)/index.html
+else
+	@echo Invalid platform!
+endif
 
 
-release:	
+release:
+	# deleting output directory if it already exists
+	if test -d $(OUT_RELEASE); then\
+		rm -r $(OUT_RELEASE);\
+	fi
+
 	mkdir -p $(OUT_RELEASE)
 	cp -r assets $(OUT_RELEASE)/assets
 
-	$(CC) $(INCLUDE) $(OPTIONS) $(LIBS) $(SOURCES) -o $(OUT_RELEASE)/$(BINARY)
+ifeq ($(TARGET), desktop)
+	$(CC) $(OPTIONS) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_RELEASE)/$(BINARY)
+else ifeq ($(TARGET), web)
+	$(EMCC) $(OPTIONS) $(OPTIONS_WEB) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_RELEASE)/index.html --shell-file $(SHELL_FILE)
+else
+	@echo Invalid platform!
+endif
 
 
 clean:
 	rm -rf out
+

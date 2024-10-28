@@ -2,16 +2,38 @@
 
 BINARY=connections
 
-if [ "$1" == "debug" ]; then
-    make debug
-    ./out/debug/$BINARY
+# checking make target
+if [ -z $1 ]; then
+    echo "No make target provided, please pass \'release\' or \'debug\' as the first argument."
+fi
+
+# setting default target
+if [ -z $TARGET ]; then
+    echo "TARGET not set, using desktop build target. (available: desktop, web)"
+    TARGET=desktop
+fi
+
+if [ $TARGET = "desktop" ]; then
+    # building and running desktop binary
+    make $1
+    ./out/$TARGET/$1/$BINARY
 
     exit 0
 fi
 
-if [ "$1" == "release" ]; then
-    make release
-    ./out/release/$BINARY
-    
+if [ $TARGET = "web" ]; then
+    # building and running local http server
+    if [ -z $RAYLIB_SRC ]; then
+        echo "RAYLIB_SRC must be set for web build."
+        exit 1
+    fi
+
+    export TARGET RAYLIB_SRC
+    make $1
+    env python -m http.server -d ./out/$TARGET/$1/
+
     exit 0
 fi
+
+echo "Invalid TARGET, available: desktop, web"
+

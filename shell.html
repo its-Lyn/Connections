@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en-us">
+  <body>
+    <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+    
+    <script type='text/javascript'>
+      var Module = {
+        canvas: (() => {
+          var canvas = document.getElementById('canvas');
+          canvas.addEventListener("webglcontextlost", (e) => { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+          return canvas;
+        })(),
+      };
+    </script>
+    {{{ SCRIPT }}}
+  </body>
+</html>

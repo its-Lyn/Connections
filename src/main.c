@@ -3,50 +3,45 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "game/game.h"
+
 #ifdef PLATFORM_WEB
 #include <emscripten/emscripten.h>
 #endif
 
-#define FPS 0 // 0 means uncapped
+// 0 means uncapped
+#define FPS 0
 
-// C is a crazy language
-//                  - Eve
+// Other loop function so it can be compatible with web.
+void loop(void *game) {
+	// We do this because emscripten wants void*
+	game_data *data = (game_data*)game;
 
-const char* message = "Hello, World!";
+	// Update func
+	process(data);
 
-void loop() {
-    // Calculate message position
-    Font font = GetFontDefault();
-    int font_size = 20;
-
-    Vector2 measurements = MeasureTextEx(font, message, font_size, 1);
-    Vector2 position = (Vector2) {
-        (GetScreenWidth() - measurements.x) / 2,
-        (GetScreenHeight() - measurements.y) / 2
-    };
-
-    BeginDrawing();
-        // Draw
-        ClearBackground(RAYWHITE);
-
-        DrawTextEx(font, message, position, font_size, 1, BLACK);
-    EndDrawing();
+	// Draw func
+	render(data);
 }
 
 int main() {
-    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-    InitWindow(800, 600, "Connections");
+	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+	InitWindow(800, 600, "Connections");
+
+	// Create the base game data
+	game_data *data = malloc(sizeof(game_data));
+
+	init(data);
 
 #ifdef PLATFORM_WEB
-    emscripten_set_main_loop(loop, FPS, 1);
+	emscripten_set_main_loop_arg(loop, data, FPS, 1);
 #else
-    SetTargetFPS(FPS);
-    while (!WindowShouldClose()) {
-        loop();
-    }
+	SetTargetFPS(FPS);
+	while (!WindowShouldClose()) loop(data);
 #endif
 
-    CloseWindow();
+	kill(data);
+	CloseWindow();
 
-    return 0;
+	return 0;
 }

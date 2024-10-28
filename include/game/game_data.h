@@ -1,8 +1,15 @@
 #pragma once
 
+// ???
+struct game_data;
+
 #include <raylib.h>
 
-typedef struct {
+#include "engine/scenes/scene.h"
+
+typedef struct game_data {
+	struct scene* main_scene;
+
 	const char* message;
 
 	Vector2 position;

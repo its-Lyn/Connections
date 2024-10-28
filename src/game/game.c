@@ -1,5 +1,10 @@
 #include "game/game.h"
 
+#include "game/scenes/game_scene.h"
+
+#include "engine/scenes/scene.h"
+#include "engine/scenes/scene_utilities.h"
+
 #include <raylib.h>
 #include <stdlib.h>
 
@@ -8,23 +13,22 @@ void init(game_data *data) {
 
 	data->font_size = 20;
 	data->font_default = GetFontDefault();
+
+	data->main_scene = scene_create(game_process, game_render);
 }
 
 void process(game_data* data) {
-	Vector2 measurements = MeasureTextEx(data->font_default, data->message, data->font_size, 1);
-	data->position = (Vector2){
-		(GetScreenWidth() - measurements.x) / 2,
-		(GetScreenHeight() - measurements.y) / 2
-	};
+	scene_update_entities(data->main_scene, data);
 }
 
 void render(game_data *data) {
 	BeginDrawing();
 		ClearBackground(RAYWHITE);
-		DrawTextEx(data->font_default, data->message, data->position, data->font_size, 1, BLACK);
+		scene_draw_entities(data->main_scene, data);
 	EndDrawing();
 }
 
 void kill(game_data *data) {
+	free(data->main_scene);
 	free(data);
 }

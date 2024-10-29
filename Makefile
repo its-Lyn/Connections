@@ -3,7 +3,7 @@ EMCC=emcc
 
 INCLUDE=-Iinclude
 DEBUG=-fsanitize=address,undefined -g3
-LIBS=-lraylib
+LIBS=-lraylib -lm
 
 OPTIONS=-Wall -Wextra -Werror -Wno-unused-parameter
 OPTIONS_WEB=-I$(RAYLIB_SRC) -L$(RAYLIB_SRC) -sUSE_GLFW=3 -sGL_ENABLE_GET_PROC_ADDRESS -DPLATFORM_WEB

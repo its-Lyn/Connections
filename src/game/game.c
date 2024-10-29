@@ -81,6 +81,9 @@ void render(game_data *data) {
 }
 
 void kill(game_data* data) {
+	// Unload the game window renderer
+	UnloadRenderTexture(data->renderer);
+
 	scene_destroy(data->main_scene, data);
 	free(data);
 }

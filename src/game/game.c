@@ -1,18 +1,19 @@
-#include "game/game.h"
+#include <stdlib.h>
 
-#include "game/scenes/game_scene.h"
+#include <raylib.h>
 
 #include "engine/scenes/scene.h"
 #include "engine/scenes/scene_utilities.h"
+#include "engine/entity.h"
+#include "engine/component.h"
 
-#include <raylib.h>
-#include <stdlib.h>
+#include "game/game.h"
+#include "game/scenes/game_scene.h"
+#include "game/components/label.h"
 
 void init(game_data *data) {
-	data->message = "Hello, World!";
-
-	data->font_size = 20;
-	data->font_default = GetFontDefault();
+	data->hello_text = entity_create((Vector2){0, 0});
+	entity_add_component(data->hello_text, label_create("Hello, World!", GetFontDefault(), 20));
 
 	data->main_scene = scene_create(game_process, game_render);
 }
@@ -28,7 +29,8 @@ void render(game_data *data) {
 	EndDrawing();
 }
 
-void kill(game_data *data) {
+void kill(game_data* data) {
+	entity_destroy(data->hello_text, data);
 	free(data->main_scene);
 	free(data);
 }

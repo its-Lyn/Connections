@@ -10,9 +10,5 @@ struct game_data;
 typedef struct game_data {
 	struct scene* main_scene;
 
-	const char* message;
-
-	Vector2 position;
-	Font font_default;
-	int font_size;
+	struct entity* hello_text;
 } game_data;

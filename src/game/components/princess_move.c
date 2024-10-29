@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include <raylib.h>
 #include <raymath.h>
@@ -24,6 +25,10 @@ void princess_move_update(component* c, game_data* data) {
 
 		c->owner->pos.x += c->princess_move.dir.x * PRINCESS_RUN * GetFrameTime();
 		c->owner->pos.y += c->princess_move.dir.y * PRINCESS_RUN * GetFrameTime();
+
+		// Clamp the princess position inside the screen
+		c->owner->pos.x = Clamp(c->owner->pos.x, 0, data->game_size.x - 8);
+        c->owner->pos.y = Clamp(c->owner->pos.y, 0, data->game_size.y - 8);
 
 		// Move the player towards the princess.
 		c->princess_move.player->pos = Vector2MoveTowards(c->princess_move.player->pos, c->owner->pos, 40 * GetFrameTime());

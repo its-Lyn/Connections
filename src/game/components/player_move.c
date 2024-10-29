@@ -9,6 +9,9 @@
 #include "engine/entity.h"
 
 static void update(component* c, game_data* data) {
+	c->owner->pos.x = Clamp(c->owner->pos.x, 0, data->game_size.x - 8);
+	c->owner->pos.y = Clamp(c->owner->pos.y, 0, data->game_size.y - 8);
+
 	if (data->princess_state == STATE_AGITATED) {
 		c->owner->vel = Vector2Zero();
 		return;

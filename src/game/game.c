@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <time.h>
 #include <math.h>
 
 #include <raylib.h>
@@ -14,6 +15,9 @@
 #include "game/components/label.h"
 
 void init(game_data *data) {
+	// Set random seed
+	srand(time(NULL));
+
 	data->main_scene = game_scene_create(data);
 
 	data->game_size = (Vector2) { 128, 128 };

@@ -6,7 +6,7 @@
 - [ ] Player/Princess HP (decide if player has HP)
 
 ## Princess Mechanics
-- [ ] Princess movement
+- [x] Princess movement
 - [x] Limit player position to a radius around the princess
 - [ ] Pull princess to redirect
 - [ ] Princess periodically gets tired and stops moving (?)

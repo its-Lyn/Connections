@@ -6,7 +6,7 @@
 #include "engine/component.h"
 #include "engine/entity.h"
 
-#define PLAYER_SPEED 200
+#define PLAYER_SPEED 100
 
 static void update(component* c, game_data* data) {
 	float x = (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) - (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT));

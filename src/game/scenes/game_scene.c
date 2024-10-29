@@ -18,7 +18,7 @@ scene* game_scene_create(game_data* data) {
 	// creating player and adding to scene
 	entity* player = entity_create((Vector2){0, 0});
 	entity_add_component(player, player_move_create());
-	entity_add_component(player, rectangle_create((Vector2){50, 50}, BLUE));
+	entity_add_component(player, rectangle_create((Vector2){8, 8}, BLUE));
 	scene_add_entity(s, player);
 
 	return s;

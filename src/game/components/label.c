@@ -3,7 +3,7 @@
 #include "engine/component.h"
 #include "game/components/label.h"
 
-void draw(component* c, game_data* data) {
+static void draw(component* c, game_data* data) {
 	DrawTextEx(c->label.font, c->label.text, c->owner->pos, c->label.font_size, 1, BLACK);
 }
 

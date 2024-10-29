@@ -1,5 +1,6 @@
 #pragma once
 
+#include "engine/entity.h"
 #include "engine/scenes/scene.h"
 #include "game/game_data.h"
 

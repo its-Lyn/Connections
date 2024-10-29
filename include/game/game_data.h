@@ -9,6 +9,4 @@ struct game_data;
 
 typedef struct game_data {
 	struct scene* main_scene;
-
-	struct entity* hello_text;
 } game_data;

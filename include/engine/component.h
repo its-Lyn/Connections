@@ -4,12 +4,18 @@ struct component;
 
 typedef enum {
 	TYPE_LABEL = 0,
+	TYPE_CONSTANT_MOVER,
+	TYPE_RECTANGLE,
+	TYPE_PLAYER_MOVE,
 } component_type;
 
 #include "engine/entity.h"
 
 #include "game/game_data.h"
 #include "game/components/label.h"
+#include "game/components/constant_mover.h"
+#include "game/components/rectangle.h"
+#include "game/components/player_move.h"
 
 typedef struct component {
 	struct entity* owner;
@@ -21,6 +27,8 @@ typedef struct component {
 	component_type type;
 	union {
 		label_data label;
+		constant_mover_data constant_mover;
+		rectangle_data rectangle;
 	};
 } component;
 

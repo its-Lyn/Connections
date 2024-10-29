@@ -3,6 +3,7 @@ pkgs.mkShell {
 	buildInputs = with pkgs; [
 		emscripten
 		raylib
+		pkg-config
 	];
 }
 

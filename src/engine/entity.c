@@ -1,5 +1,8 @@
 #include <stdlib.h>
 
+#include <raylib.h>
+#include <raymath.h>
+
 #include "engine/entity.h"
 #include "engine/scenes/scene_utilities.h"
 
@@ -54,6 +57,10 @@ component* entity_get_component(entity* e, component_type type) {
 }
 
 void entity_update(entity* e, game_data* data) {
+	// moving entity
+	e->pos = Vector2Add(e->pos, Vector2Scale(e->vel, GetFrameTime()));
+
+	// updating components
 	for (linked_list* elem = e->components; elem != NULL; elem = elem->next) {
 		component* c = elem->data;
 		if (c->update != NULL) c->update(c, data);

@@ -4,4 +4,6 @@
 
 #include "engine/entity.h"
 
-struct entity* princess_create(Vector2 position, struct entity* player);
+#include "engine/scenes/scene.h"
+
+struct entity* princess_create(struct scene* s, Vector2 position, struct entity* player);

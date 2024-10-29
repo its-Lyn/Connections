@@ -13,6 +13,7 @@ scene* scene_create(void (*process)(scene* s, game_data* data), void (*render)(s
 	scene* new_scene = (scene*)malloc(sizeof(scene));
 
 	new_scene->entities = NULL;
+	new_scene->colliders = NULL;
 	new_scene->process = process;
 	new_scene->render  = render;
 
@@ -46,3 +47,11 @@ void scene_remove_entity(scene* s, entity* e) {
 	s->entities = linked_list_delete_element(s->entities, e->scene_elem);
 }
 
+void scene_add_collider(scene* s, component* collider) {
+	s->colliders = collider->collider.list_elem = linked_list_insert(s->colliders, collider);
+}
+
+void scene_remove_collider(scene* s, component* collider) {
+	if (collider->collider.list_elem == NULL) return;
+	s->colliders = linked_list_delete_element(s->colliders, collider->collider.list_elem);
+}

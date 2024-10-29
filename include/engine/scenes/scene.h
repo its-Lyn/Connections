@@ -8,6 +8,7 @@ struct scene;
 
 typedef struct scene {
 	linked_list* entities;
+	linked_list* colliders;
 
 	void (*process)(struct scene*, struct game_data*);
 	void (*render)(struct scene*, struct game_data*);

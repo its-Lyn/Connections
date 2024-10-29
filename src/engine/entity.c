@@ -8,7 +8,7 @@
 
 #include "game/game_data.h"
 
-entity* entity_create(Vector2 position) {
+entity* entity_create(Vector2 position, float speed) {
 	entity* new_entity = malloc(sizeof(entity));
 
 	new_entity->owner = NULL;
@@ -16,6 +16,7 @@ entity* entity_create(Vector2 position) {
 
 	new_entity->pos = position;
 	new_entity->vel = (Vector2){0, 0};
+	new_entity->speed = speed;
 	new_entity->components = NULL;
 
 	return new_entity;

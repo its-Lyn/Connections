@@ -6,6 +6,7 @@
 
 #include "game/scenes/game_scene.h"
 #include "game/entities/player.h"
+#include "game/entities/princess.h"
 
 void game_process(scene *game_scene, game_data *data) {
 }
@@ -19,6 +20,9 @@ scene* game_scene_create(game_data* data) {
 	// creating player and adding to scene
 	entity* player = player_create((Vector2){0, 0});
 	scene_add_entity(s, player);
+
+	// Princess
+	scene_add_entity(s, princess_create((Vector2){20, 10}, player));
 
 	return s;
 }

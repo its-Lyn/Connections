@@ -7,7 +7,7 @@
 
 ## Princess Mechanics
 - [ ] Princess movement
-- [ ] Limit player position to a radius around the princess
+- [x] Limit player position to a radius around the princess
 - [ ] Pull princess to redirect
 - [ ] Princess periodically gets tired and stops moving (?)
 

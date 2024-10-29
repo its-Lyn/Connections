@@ -14,10 +14,11 @@ typedef struct entity {
 	linked_list* scene_elem; // element in the owner scene's entity list
 
 	Vector2 pos, vel;
+	float speed;
 	linked_list* components;
 } entity;
 
-entity* entity_create(Vector2 position);
+entity* entity_create(Vector2 position, float speed);
 void entity_destroy(entity* e, game_data* data);
 void entity_add_component(entity* e, struct component* c);
 struct component* entity_get_component(entity* e, component_type type);

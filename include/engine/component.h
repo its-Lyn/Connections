@@ -7,6 +7,7 @@ typedef enum {
 	TYPE_CONSTANT_MOVER,
 	TYPE_RECTANGLE,
 	TYPE_PLAYER_MOVE,
+	TYPE_CONNECTION
 } component_type;
 
 #include "engine/entity.h"
@@ -16,6 +17,7 @@ typedef enum {
 #include "game/components/constant_mover.h"
 #include "game/components/rectangle.h"
 #include "game/components/player_move.h"
+#include "game/components/connection.h"
 
 typedef struct component {
 	struct entity* owner;
@@ -29,7 +31,7 @@ typedef struct component {
 		label_data label;
 		constant_mover_data constant_mover;
 		rectangle_data rectangle;
-		player_move_data player_move;
+		connection_data connection;
 	};
 } component;
 

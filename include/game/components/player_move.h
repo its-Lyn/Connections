@@ -2,5 +2,9 @@
 
 #include "engine/component.h"
 
-struct component* player_move_create();
+typedef struct {
+	float speed;
+} player_move_data;
+
+struct component* player_move_create(float speed);
 

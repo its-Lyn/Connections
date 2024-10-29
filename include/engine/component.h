@@ -29,6 +29,7 @@ typedef struct component {
 		label_data label;
 		constant_mover_data constant_mover;
 		rectangle_data rectangle;
+		player_move_data player_move;
 	};
 } component;
 

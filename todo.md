@@ -1,6 +1,6 @@
 ## Combat
-- [ ] Enemy movement
-- [ ] **Collision**
+- [x] Enemy movement
+- [x] **Collision**
 - [ ] Player attack
 - [ ] Enemy HP
 - [ ] Player/Princess HP (decide if player has HP)

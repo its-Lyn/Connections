@@ -1,11 +1,16 @@
 #include <stdlib.h>
 
 #include "engine/entity.h"
+#include "engine/scenes/scene_utilities.h"
+
 #include "game/game_data.h"
 
 entity* entity_create(Vector2 position) {
 	entity* new_entity = malloc(sizeof(entity));
-	
+
+	new_entity->owner = NULL;
+	new_entity->scene_elem = NULL;
+
 	new_entity->pos = position;
 	new_entity->vel = (Vector2){0, 0};
 	new_entity->components = NULL;
@@ -14,6 +19,7 @@ entity* entity_create(Vector2 position) {
 }
 
 void entity_destroy(entity* e, game_data* data) {
+	// destroying components and freeing each list element
 	linked_list* elem = e->components;
 	while (elem != NULL) {
 		linked_list* next = elem->next;
@@ -23,6 +29,11 @@ void entity_destroy(entity* e, game_data* data) {
 		free(elem);
 
 		elem = next;
+	}
+
+	// removing this entity from it's owner scene's entity list
+	if (e->owner != NULL) {
+		scene_remove_entity(e->owner, e);
 	}
 
 	free(e);
@@ -45,14 +56,14 @@ component* entity_get_component(entity* e, component_type type) {
 void entity_update(entity* e, game_data* data) {
 	for (linked_list* elem = e->components; elem != NULL; elem = elem->next) {
 		component* c = elem->data;
-		c->update(c, data);
+		if (c->update != NULL) c->update(c, data);
 	}
 }
 
 void entity_draw(entity* e, game_data* data) {
 	for (linked_list* elem = e->components; elem != NULL; elem = elem->next) {
 		component* c = elem->data;
-		c->draw(c, data);
+		if (c->draw != NULL) c->draw(c, data);
 	}
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "game/game_data.h"
 #include "engine/scenes/scene.h"
+#include "game/game_data.h"
 
-void game_process(scene* game_scene, game_data* data);
-void game_render(scene* game_scene, game_data* data);
+scene* game_scene_create(game_data* data);
+

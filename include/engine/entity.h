@@ -5,10 +5,14 @@
 struct entity;
 
 #include "engine/utilities/linked_list.h"
+#include "engine/scenes/scene.h"
 #include "engine/component.h"
 #include "game/game_data.h"
 
 typedef struct entity {
+	scene* owner;
+	linked_list* scene_elem; // element in the owner scene's entity list
+
 	Vector2 pos, vel;
 	linked_list* components;
 } entity;

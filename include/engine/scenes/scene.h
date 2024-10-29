@@ -3,10 +3,11 @@
 // ???
 struct scene;
 
+#include "engine/utilities/linked_list.h"
 #include "game/game_data.h"
 
 typedef struct scene {
-	// entity[] entities;
+	linked_list* entities;
 
 	void (*process)(struct scene*, struct game_data*);
 	void (*render)(struct scene*, struct game_data*);

@@ -25,7 +25,6 @@ void on_run_time_out(game_data* data) {
 	if (data->princess_state == STATE_AGITATED) data->princess_state = STATE_CALM;
 }
 
-#include <stdio.h>
 // Adds an enemy to the *MAIN SCENE* every timeout
 void on_enemy_spawn_time_out(game_data* data) {
 	// TODO: Enemy variety.
@@ -55,8 +54,6 @@ void on_enemy_spawn_time_out(game_data* data) {
 
 			break;
 	}
-
-	printf("x: %f\ny: %f\n", enemy_pos.x, enemy_pos.y);
 
 	scene_add_entity(data->main_scene, enemy_normal_create(enemy_pos, rand_float(20, 30), data->princess));
 }

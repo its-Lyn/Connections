@@ -12,6 +12,7 @@ typedef struct {
     Color connection_colour;
 
     float max_dist;
+    float leeway;
 } connection_data;
 
-struct component* connection_create(struct entity* connected, Color colour, float max_dist);
+struct component* connection_create(struct entity* connected, Color colour, float max_dist, float leeway);

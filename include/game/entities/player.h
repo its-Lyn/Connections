@@ -4,5 +4,10 @@
 
 #include "engine/entity.h"
 
+#define PLAYER_MIN_SPEED  50.0f
+#define PLAYER_MAX_SPEED 100.0f
+#define PLAYER_WIDTH  8
+#define PLAYER_HEIGHT 8
+
 struct entity* player_create(Vector2 position);
 

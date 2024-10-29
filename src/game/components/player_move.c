@@ -12,11 +12,6 @@ static void update(component* c, game_data* data) {
 	c->owner->pos.x = Clamp(c->owner->pos.x, 0, data->game_size.x - 8);
 	c->owner->pos.y = Clamp(c->owner->pos.y, 0, data->game_size.y - 8);
 
-	if (data->princess_state == STATE_AGITATED) {
-		c->owner->vel = Vector2Zero();
-		return;
-	}
-
 	float x = (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) - (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT));
 	float y = (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))  - (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP));
 	Vector2 dir = Vector2Normalize((Vector2){x, y});

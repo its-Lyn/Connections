@@ -29,9 +29,6 @@ void princess_move_update(component* c, game_data* data) {
 		// Clamp the princess position inside the screen
 		c->owner->pos.x = Clamp(c->owner->pos.x, 0, data->game_size.x - 8);
 		c->owner->pos.y = Clamp(c->owner->pos.y, 0, data->game_size.y - 8);
-
-		// Move the player towards the princess.
-		c->princess_move.player->pos = Vector2MoveTowards(c->princess_move.player->pos, c->owner->pos, 40 * GetFrameTime());
 	} else if (data->princess_state == STATE_CALM && !Vector2Equals(c->princess_move.dir, Vector2Zero())) {
 		c->princess_move.dir = Vector2Zero();
 	}

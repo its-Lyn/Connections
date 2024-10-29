@@ -15,9 +15,13 @@ typedef enum {
 typedef struct game_data {
 	struct scene* main_scene;
 
+	struct entity* princess;
 	struct component* princess_timer;
 	struct component* princess_run_timer;
 	princess_state princess_state;
+
+	struct component* enemy_spawn_timer;
+	float enemy_spawn_time;
 
 	RenderTexture2D renderer;
 

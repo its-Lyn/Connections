@@ -9,7 +9,7 @@ typedef enum {
 	TYPE_PLAYER_MOVE,
 	TYPE_PRINCESS_MOVE,
 	TYPE_CONNECTION,
-	TYPE_TIMER
+	TYPE_TIMER,
 } component_type;
 
 #include "engine/entity.h"

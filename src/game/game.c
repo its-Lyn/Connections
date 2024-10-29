@@ -25,6 +25,8 @@ void init(game_data *data) {
 	data->virt_mouse = (Vector2) { 0,  0 };
 
 	data->renderer = LoadRenderTexture(data->game_size.x, data->game_size.y);
+
+	data->enemy_spawn_time = 2.0f;
 }
 
 void process(game_data* data) {

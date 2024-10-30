@@ -68,7 +68,8 @@ void game_process(scene *game_scene, game_data *data) {
 					other_collider->collider.radius
 				);
 
-				if (collides && collider->collider.on_collide != NULL) collider->collider.on_collide(data);
+				if (collides && collider->collider.on_collide != NULL && collider->collider.enabled && other_collider->collider.enabled)
+					collider->collider.on_collide(game_scene, collider, other_collider, data);
 			}
 		}
 	}
@@ -86,6 +87,7 @@ scene* game_scene_create(game_data* data) {
 
 	// Princess
 	data->princess = princess_create(data, s, (Vector2){20, 10}, data->player);
+	data->princess_lives = 3;
 	scene_add_entity(s, data->princess);
 
 	// Add enemy handler and spawner.

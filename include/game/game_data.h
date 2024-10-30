@@ -17,9 +17,11 @@ typedef struct game_data {
 
 	struct entity* princess;
 	struct component* princess_timer;
+	struct component* princess_iframe;
 	struct component* princess_run_timer;
 	struct component* princess_stun_timer;
 	princess_state princess_state;
+	int princess_lives;
 
 	struct component* enemy_spawn_timer;
 	float enemy_spawn_time;

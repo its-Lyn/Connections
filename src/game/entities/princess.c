@@ -3,6 +3,10 @@
 #include "game/entities/princess.h"
 #include "game/layers.h"
 
+#include "game/scenes/game_scene.h"
+#include "engine/scenes/scene.h"
+#include "engine/scenes/scene_utilities.h"
+
 void on_panic_time_out(game_data* data) {
 	// setting state to agitated to move around
 	data->princess_state = STATE_AGITATED;
@@ -16,6 +20,27 @@ void on_run_time_out(game_data* data) {
 	data->princess_timer->timer.enabled = true; // restart timer to go back to agitated
 }
 
+#include <stdio.h>
+void on_collided(scene* s, component* self, component* other, game_data* data) {
+	if (!data->princess_iframe->timer.enabled) {
+		printf("actually took damage\n");
+		data->princess_lives--;
+		if (data->princess_lives <= 0) {
+			// We need to fix this :sob:
+			// ERROR: heap-use-after-free
+			// NOTE: If not free'd we memleak
+			// scene_change(data->main_scene, game_scene_create(data), data);
+			CloseWindow();
+			exit(1);
+		}
+
+		data->princess_iframe->timer.timer = 0;
+		data->princess_iframe->timer.enabled = true;
+	}
+}
+
+void on_iframe_time_out(game_data* data) {}
+
 entity* princess_create(game_data* data, scene* s, Vector2 position, entity* player) {
 	entity* princess = entity_create(position, PRINCESS_SPEED);
 
@@ -23,7 +48,7 @@ entity* princess_create(game_data* data, scene* s, Vector2 position, entity* pla
 	entity_add_component(princess, connection_create(player, BROWN, 28.0f, 8.0f));
 	entity_add_component(princess, princess_move_create(player));
 
-	component* princess_collider = collider_create(s, (Vector2) {4, 4}, 5, LAYER_PRINCESS, LAYER_ENEMIES, NULL);
+	component* princess_collider = collider_create(s, (Vector2) {4, 4}, 5, LAYER_PRINCESS, LAYER_ENEMIES, on_collided);
 	entity_add_component(princess, princess_collider);
 
 	// Add panic timer.
@@ -35,9 +60,13 @@ entity* princess_create(game_data* data, scene* s, Vector2 position, entity* pla
 	// Add stun timer (when tugged)
 	data->princess_stun_timer = timer_engine_create(PRINCESS_STUN_TIME, false, true, on_panic_time_out);
 
+	// Add iframes
+	data->princess_iframe = timer_engine_create(1.0f, false, true, on_iframe_time_out);
+
 	entity_add_component(princess, data->princess_run_timer);
 	entity_add_component(princess, data->princess_timer);
 	entity_add_component(princess, data->princess_stun_timer);
+	entity_add_component(princess, data->princess_iframe);
 
 	data->princess_state = STATE_CALM;
 

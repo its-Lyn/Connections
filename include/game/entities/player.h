@@ -8,6 +8,10 @@
 
 #define PLAYER_MIN_SPEED  50.0f
 #define PLAYER_MAX_SPEED 100.0f
+
+#define PLAYER_ACCEL    600.0f
+#define PLAYER_FRICTION 300.0f
+
 #define PLAYER_WIDTH  8
 #define PLAYER_HEIGHT 8
 

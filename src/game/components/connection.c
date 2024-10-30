@@ -7,6 +7,9 @@
 #include "game/components/connection.h"
 #include "game/entities/player.h"
 
+#define ROPE_MIN_TENSION 300.0f
+#define ROPE_MAX_TENSION 550.0f
+
 void connection_update(component* c, game_data* data) {
 	entity* princess = c->owner;
 	entity* player = c->connection.connected;
@@ -14,20 +17,22 @@ void connection_update(component* c, game_data* data) {
 	float dist = Vector2Distance(princess->pos, player->pos);
 
 	if (dist > c->connection.max_dist) {
+		float stretch = (dist - c->connection.max_dist) / c->connection.leeway;
+		Vector2 rope_dir = Vector2Normalize(Vector2Subtract(princess->pos, player->pos));
+
 		// slowing down the player if they're going against the rope
 		if (!Vector2Equals(player->vel, (Vector2){0, 0})) {
-			Vector2 rope_dir = Vector2Normalize(Vector2Subtract(princess->pos, player->pos));
 			Vector2 move_dir = Vector2Normalize(player->vel);
-			player->speed = Lerp(PLAYER_MIN_SPEED, PLAYER_MAX_SPEED, (Vector2DotProduct(rope_dir, move_dir) + 1.0f)/2.0f);
+			float dir_attenuation = 1 - ((Vector2DotProduct(rope_dir, move_dir) + 1) / 2.0f); // 1 when going against the rope, 0 when going in it's direction
+			player->speed = Lerp(PLAYER_MAX_SPEED, PLAYER_MIN_SPEED, stretch * dir_attenuation);
 		}
 
-		if (dist < c->connection.max_dist + c->connection.leeway) {
-			// rope is stretching, pull the entities together slightly
+		// rope is stretching, pull the entities together slightly
+		player->vel = Vector2Add(player->vel, Vector2Scale(rope_dir, Lerp(ROPE_MIN_TENSION, ROPE_MAX_TENSION, stretch) * GetFrameTime()));
 
-			return;
-		}
-
+		if (dist < c->connection.max_dist + c->connection.leeway) return;
 		// no more leeway in the rope, start pulling
+
 		if (data->princess_state == STATE_CALM) {
 			// if the princess is calm, she is pulled to the player
 			Vector2 diff = Vector2Subtract(princess->pos, player->pos);

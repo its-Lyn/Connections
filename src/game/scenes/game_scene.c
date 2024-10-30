@@ -19,8 +19,8 @@
 #include "game/layers.h"
 
 void on_panic_time_out(game_data* data) {
-	// 1/3 chance for the princess to get agitated.
-	if (rand() % 4 == 0) data->princess_state = STATE_AGITATED;
+	// 1/5 chance for the princess to get agitated.
+	//if (rand() % 5 == 0) data->princess_state = STATE_AGITATED;
 }
 
 void on_run_time_out(game_data* data) {

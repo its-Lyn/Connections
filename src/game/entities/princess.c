@@ -1,4 +1,5 @@
-#include <stdio.h>
+#include <raylib.h>
+#include <raymath.h>
 
 #include "engine/scenes/scene.h"
 #include "engine/scenes/scene_utilities.h"
@@ -23,6 +24,7 @@ void on_run_time_out(game_data* data) {
 
 void on_collided(scene* s, component* self, component* other, game_data* data) {
 	if (!data->princess_iframe->timer.enabled) {
+		// damage
 		data->princess_lives--;
 		if (data->princess_lives <= 0) {
 			// restarting game
@@ -30,8 +32,13 @@ void on_collided(scene* s, component* self, component* other, game_data* data) {
 			return;
 		}
 
+		// iframes
 		data->princess_iframe->timer.timer = 0;
 		data->princess_iframe->timer.enabled = true;
+
+		// knockback
+		Vector2 dir = Vector2Normalize(Vector2Subtract(self->owner->pos, other->owner->pos));
+		self->owner->vel = Vector2Scale(dir, PRINCESS_KNOCKBACK);
 	}
 }
 

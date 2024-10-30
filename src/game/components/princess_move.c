@@ -24,23 +24,23 @@ void princess_move_update(component* c, game_data* data) {
 	// Clamp the princess position inside the screen and bounce on the edges
 	Vector2 pos = c->owner->pos;
 	if (pos.x < 0) {
-		c->princess_move.dir.x *= -0.5;
-		c->owner->vel.x *= -1;
+		c->princess_move.dir.x *= -1;
+		c->owner->vel.x *= -0.5;
 		c->owner->pos.x = 0;
 	} else if (pos.x > data->game_size.x - 8) {
-		c->princess_move.dir.x *= -0.5;
+		c->princess_move.dir.x *= -1;
 		c->owner->vel.x *= -1;
 		c->owner->pos.x = data->game_size.x - 8;
 	}
 
 	if (pos.y < 0) {
-		c->princess_move.dir.y *= -0.5;
-		c->owner->vel.y *= -1;
+		c->princess_move.dir.y *= -1;
+		c->owner->vel.y *= -0.5;
 		c->owner->pos.y = 0;
 	} else if (pos.y > data->game_size.y - 8) {
-		c->princess_move.dir.y *= -0.5;
-		c->owner->vel.y *= -1;
-		c->owner->pos.y = data->game_size.y - 8;
+		c->princess_move.dir.y *= -1;
+		c->owner->vel.y *= -0.5;
+c->owner->pos.y = data->game_size.y - 8;
 	}
 
 	Vector2 goal_vel = Vector2Scale(c->princess_move.dir, c->owner->speed);

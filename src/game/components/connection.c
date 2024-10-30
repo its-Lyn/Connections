@@ -7,8 +7,8 @@
 #include "game/components/connection.h"
 #include "game/entities/player.h"
 
-#define ROPE_MIN_TENSION 300.0f
-#define ROPE_MAX_TENSION 550.0f
+#define ROPE_MIN_TENSION  5.0f
+#define ROPE_MAX_TENSION 45.0f
 
 void connection_update(component* c, game_data* data) {
 	entity* princess = c->owner;
@@ -18,17 +18,28 @@ void connection_update(component* c, game_data* data) {
 
 	if (dist > c->connection.max_dist) {
 		float stretch = (dist - c->connection.max_dist) / c->connection.leeway;
-		Vector2 rope_dir = Vector2Normalize(Vector2Subtract(princess->pos, player->pos));
+		Vector2 player_rope_dir = Vector2Normalize(Vector2Subtract(princess->pos, player->pos)); // rope direction from player
+		Vector2 princess_rope_dir = Vector2Normalize(Vector2Subtract(player->pos, princess->pos)); // rope direction from princess
 
 		// slowing down the player if they're going against the rope
 		if (!Vector2Equals(player->vel, (Vector2){0, 0})) {
 			Vector2 move_dir = Vector2Normalize(player->vel);
-			float dir_attenuation = 1 - ((Vector2DotProduct(rope_dir, move_dir) + 1) / 2.0f); // 1 when going against the rope, 0 when going in it's direction
+			float dir_attenuation = 1 - ((Vector2DotProduct(player_rope_dir, move_dir) + 1) / 2.0f); // 1 when going against the rope, 0 when going in it's direction
 			player->speed = Lerp(PLAYER_MAX_SPEED, PLAYER_MIN_SPEED, stretch * dir_attenuation);
 		}
 
 		// rope is stretching, pull the entities together slightly
-		player->vel = Vector2Add(player->vel, Vector2Scale(rope_dir, Lerp(ROPE_MIN_TENSION, ROPE_MAX_TENSION, stretch) * GetFrameTime()));
+		  // - only pull player if they're not pressing anything
+		if (!IsKeyDown(KEY_W) && !IsKeyDown(KEY_A) && !IsKeyDown(KEY_S) && !IsKeyDown(KEY_D) &&
+		!IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT)) {
+			player->pos = Vector2Add(player->pos, Vector2Scale(player_rope_dir, Lerp(ROPE_MIN_TENSION, ROPE_MAX_TENSION, stretch) * GetFrameTime()));
+		}
+
+		  // - pulling princess
+		princess->pos = Vector2Add(princess->pos, Vector2Scale(princess_rope_dir, Lerp(ROPE_MIN_TENSION, ROPE_MAX_TENSION, stretch) * GetFrameTime()));
+
+		// updating distance after moving player
+		float dist = Vector2Distance(princess->pos, player->pos);
 
 		if (dist < c->connection.max_dist + c->connection.leeway) return;
 		// no more leeway in the rope, start pulling

@@ -9,29 +9,42 @@
 #include "engine/component.h"
 
 #include "game/components/princess_move.h"
-
-#define PRINCESS_RUN 80
+#include "game/entities/princess.h"
 
 void princess_move_update(component* c, game_data* data) {
-	// We are agitated
-	if (data->princess_state == STATE_AGITATED) {
-		// We have not picked a new direction yet.
-		if (Vector2Equals(c->princess_move.dir, Vector2Zero())) {
-			float angle = ((float)rand() / (float)RAND_MAX) * 2.0f * PI;
-			c->princess_move.dir = (Vector2) { sin(angle), cos(angle) };
-
-			data->princess_run_timer->timer.enabled = true;
-		}
-
-		c->owner->pos.x += c->princess_move.dir.x * PRINCESS_RUN * GetFrameTime();
-		c->owner->pos.y += c->princess_move.dir.y * PRINCESS_RUN * GetFrameTime();
-
-		// Clamp the princess position inside the screen
-		c->owner->pos.x = Clamp(c->owner->pos.x, 0, data->game_size.x - 8);
-		c->owner->pos.y = Clamp(c->owner->pos.y, 0, data->game_size.y - 8);
-	} else if (data->princess_state == STATE_CALM && !Vector2Equals(c->princess_move.dir, Vector2Zero())) {
+	if (data->princess_state == STATE_CALM) {
+		// princess is calm - direction is 0,0
 		c->princess_move.dir = Vector2Zero();
+	} else if (Vector2Equals(c->princess_move.dir, Vector2Zero())) {
+		// We have not picked a new direction yet.
+		float angle = ((float)rand() / (float)RAND_MAX) * 2.0f * PI;
+		c->princess_move.dir = (Vector2) { sin(angle), cos(angle) };
 	}
+
+	// Clamp the princess position inside the screen and bounce on the edges
+	Vector2 pos = c->owner->pos;
+	if (pos.x < 0) {
+		c->princess_move.dir.x *= -0.5;
+		c->owner->vel.x *= -1;
+		c->owner->pos.x = 0;
+	} else if (pos.x > data->game_size.x - 8) {
+		c->princess_move.dir.x *= -0.5;
+		c->owner->vel.x *= -1;
+		c->owner->pos.x = data->game_size.x - 8;
+	}
+
+	if (pos.y < 0) {
+		c->princess_move.dir.y *= -0.5;
+		c->owner->vel.y *= -1;
+		c->owner->pos.y = 0;
+	} else if (pos.y > data->game_size.y - 8) {
+		c->princess_move.dir.y *= -0.5;
+		c->owner->vel.y *= -1;
+		c->owner->pos.y = data->game_size.y - 8;
+	}
+
+	Vector2 goal_vel = Vector2Scale(c->princess_move.dir, c->owner->speed);
+	c->owner->vel = Vector2MoveTowards(c->owner->vel, goal_vel, PRINCESS_ACCEL * GetFrameTime());
 }
 
 component* princess_move_create(entity* player) {

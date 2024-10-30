@@ -7,8 +7,9 @@
 #include "game/components/connection.h"
 #include "game/entities/player.h"
 
-#define ROPE_MIN_TENSION  5.0f
-#define ROPE_MAX_TENSION 45.0f
+#define ROPE_MIN_TENSION  10.0f
+#define ROPE_MAX_TENSION 750.0f
+#define PRINCESS_TENSION_RESISTANCE 1.6f
 
 void connection_update(component* c, game_data* data) {
 	entity* princess = c->owner;
@@ -32,11 +33,11 @@ void connection_update(component* c, game_data* data) {
 		  // - only pull player if they're not pressing anything
 		if (!IsKeyDown(KEY_W) && !IsKeyDown(KEY_A) && !IsKeyDown(KEY_S) && !IsKeyDown(KEY_D) &&
 		!IsKeyDown(KEY_UP) && !IsKeyDown(KEY_DOWN) && !IsKeyDown(KEY_LEFT) && !IsKeyDown(KEY_RIGHT)) {
-			player->pos = Vector2Add(player->pos, Vector2Scale(player_rope_dir, Lerp(ROPE_MIN_TENSION, ROPE_MAX_TENSION, stretch) * GetFrameTime()));
+				player->vel = Vector2Add(player->vel, Vector2Scale(player_rope_dir, Lerp(ROPE_MIN_TENSION, ROPE_MAX_TENSION, stretch) * GetFrameTime()));
 		}
 
 		  // - pulling princess
-		princess->pos = Vector2Add(princess->pos, Vector2Scale(princess_rope_dir, Lerp(ROPE_MIN_TENSION, ROPE_MAX_TENSION, stretch) * GetFrameTime()));
+		princess->vel = Vector2Add(princess->vel, Vector2Scale(princess_rope_dir, Lerp(ROPE_MIN_TENSION, ROPE_MAX_TENSION, stretch)/PRINCESS_TENSION_RESISTANCE * GetFrameTime()));
 
 		// updating distance after moving player
 		float dist = Vector2Distance(princess->pos, player->pos);

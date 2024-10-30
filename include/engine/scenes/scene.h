@@ -12,6 +12,8 @@ typedef struct scene {
 
 	void (*process)(struct scene*, struct game_data*);
 	void (*render)(struct scene*, struct game_data*);
+
+	struct scene* goto_scene;
 } scene;
 
 void scene_update_entities(scene* s, struct game_data* data);

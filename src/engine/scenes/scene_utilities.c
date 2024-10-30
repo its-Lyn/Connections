@@ -1,12 +1,12 @@
 #include "engine/entity.h"
 #include "engine/scenes/scene_utilities.h"
 
+#include "game/game_data.h"
+
 #include <stdlib.h>
 
-void scene_change(scene* current_scene, scene* new_scene, game_data* data) {
-	// Free old data.
-	scene_destroy(current_scene, data);
-	current_scene = new_scene;
+void scene_change(scene* current_scene, scene* new_scene) {
+	current_scene->goto_scene = new_scene;
 }
 
 scene* scene_create(void (*process)(scene* s, game_data* data), void (*render)(scene *s, game_data* data)) {
@@ -16,6 +16,7 @@ scene* scene_create(void (*process)(scene* s, game_data* data), void (*render)(s
 	new_scene->colliders = NULL;
 	new_scene->process = process;
 	new_scene->render  = render;
+	new_scene->goto_scene = NULL;
 
 	return new_scene;
 }

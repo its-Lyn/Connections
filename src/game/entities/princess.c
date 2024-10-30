@@ -1,11 +1,12 @@
 #include <stdio.h>
 
-#include "game/entities/princess.h"
-#include "game/layers.h"
-
-#include "game/scenes/game_scene.h"
 #include "engine/scenes/scene.h"
 #include "engine/scenes/scene_utilities.h"
+
+#include "game/game.h"
+#include "game/entities/princess.h"
+#include "game/layers.h"
+#include "game/scenes/game_scene.h"
 
 void on_panic_time_out(game_data* data) {
 	// setting state to agitated to move around
@@ -20,18 +21,13 @@ void on_run_time_out(game_data* data) {
 	data->princess_timer->timer.enabled = true; // restart timer to go back to agitated
 }
 
-#include <stdio.h>
 void on_collided(scene* s, component* self, component* other, game_data* data) {
 	if (!data->princess_iframe->timer.enabled) {
-		printf("actually took damage\n");
 		data->princess_lives--;
 		if (data->princess_lives <= 0) {
-			// We need to fix this :sob:
-			// ERROR: heap-use-after-free
-			// NOTE: If not free'd we memleak
-			// scene_change(data->main_scene, game_scene_create(data), data);
-			CloseWindow();
-			exit(1);
+			// restarting game
+			scene_change(data->main_scene, game_scene_create(data));
+			return;
 		}
 
 		data->princess_iframe->timer.timer = 0;

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include <math.h>
 
@@ -14,7 +15,10 @@
 #include "game/scenes/game_scene.h"
 #include "game/components/label.h"
 
-void init(game_data *data) {
+void init(game_data* data) {
+	// initializing all to 0 to make sure no values are left uninitialized
+	memset(data, 0, sizeof(game_data));
+
 	// Set random seed
 	srand(time(NULL));
 
@@ -47,7 +51,7 @@ void process(game_data* data) {
 	scene_update_entities(data->main_scene, data);
 }
 
-void render(game_data *data) {
+void render(game_data* data) {
 	// This is where we draw inside the game world
 	BeginTextureMode(data->renderer);
 		ClearBackground(RAYWHITE);

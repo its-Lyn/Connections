@@ -15,6 +15,8 @@ entity* player_create(scene* s, Vector2 position) {
 	component* player_collider = collider_create(s, (Vector2) {4, 4}, 5, LAYER_PLAYER, LAYER_PRINCESS, NULL);
 	entity_add_component(player, player_collider);
 
+	entity_add_component(player, tugger_create(player));
+
 	return player;
 }
 

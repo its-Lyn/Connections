@@ -11,7 +11,7 @@ void timer_update(component* c, game_data* data) {
 			if (c->timer.one_shot)
 				c->timer.enabled = false;
 
-			c->timer.on_timeout(data);
+			if (c->timer.on_timeout != NULL) c->timer.on_timeout(data);
 		}
 	}
 }

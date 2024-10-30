@@ -10,7 +10,8 @@ typedef enum {
 	TYPE_PRINCESS_MOVE,
 	TYPE_CONNECTION,
 	TYPE_TIMER,
-	TYPE_COLLIDER
+	TYPE_COLLIDER,
+	TYPE_TUGGER,
 } component_type;
 
 #include "engine/entity.h"
@@ -24,6 +25,7 @@ typedef enum {
 #include "game/components/timer.h"
 #include "game/components/princess_move.h"
 #include "game/components/collider.h"
+#include "game/components/tugger.h"
 
 typedef struct component {
 	struct entity* owner;
@@ -41,6 +43,7 @@ typedef struct component {
 		connection_data connection;
 		timer_data timer;
 		collider_data collider;
+		tugger_data tugger;
 	};
 } component;
 

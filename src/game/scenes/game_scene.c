@@ -81,12 +81,11 @@ scene* game_scene_create(game_data* data) {
 	scene* s = scene_create(game_process, game_render);
 
 	// creating player and adding to scene
-	entity* player = player_create(s, (Vector2){0, 0});
-
-	scene_add_entity(s, player);
+	data->player = player_create(s, (Vector2){0, 0});
+	scene_add_entity(s, data->player);
 
 	// Princess
-	data->princess = princess_create(data, s, (Vector2){20, 10}, player);
+	data->princess = princess_create(data, s, (Vector2){20, 10}, data->player);
 	scene_add_entity(s, data->princess);
 
 	// Add enemy handler and spawner.

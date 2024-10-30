@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "game/entities/princess.h"
 #include "game/layers.h"
 
@@ -25,13 +27,17 @@ entity* princess_create(game_data* data, scene* s, Vector2 position, entity* pla
 	entity_add_component(princess, princess_collider);
 
 	// Add panic timer.
-	data->princess_timer = timer_engine_create(4.0f, true, true, on_panic_time_out);
+	data->princess_timer = timer_engine_create(PRINCESS_CALM_TIME, true, true, on_panic_time_out);
 
 	// Add run timer.
-	data->princess_run_timer = timer_engine_create(4.0f, false, true, on_run_time_out);
+	data->princess_run_timer = timer_engine_create(PRINCESS_AGITATED_TIME, false, true, on_run_time_out);
+
+	// Add stun timer (when tugged)
+	data->princess_stun_timer = timer_engine_create(PRINCESS_STUN_TIME, false, true, on_panic_time_out);
 
 	entity_add_component(princess, data->princess_run_timer);
 	entity_add_component(princess, data->princess_timer);
+	entity_add_component(princess, data->princess_stun_timer);
 
 	data->princess_state = STATE_CALM;
 

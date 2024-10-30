@@ -28,8 +28,11 @@ void update(component* c, game_data* data) {
 	c->tugger.cooldown->timer.enabled = true;
 }
 
+void tugger_draw(component* c, game_data* data) {
+}
+
 component* tugger_create(entity* player) {
-	component* c = component_create(TYPE_TUGGER, update, NULL, NULL);
+	component* c = component_create(TYPE_TUGGER, update, tugger_draw, NULL);
 
 	c->tugger.cooldown = timer_engine_create(PLAYER_TUG_COOLDOWN, false, true, NULL);
 	c->tugger.player_sprite = entity_get_component(player, TYPE_RECTANGLE);

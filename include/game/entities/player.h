@@ -18,5 +18,5 @@
 #define PLAYER_TUG_COOLDOWN 3.0f
 #define PLAYER_TUG_FORCE  250.0f
 
-struct entity* player_create(struct scene* s, Vector2 position);
+struct entity* player_create(struct scene* s,  game_data* data, Vector2 position);
 

@@ -26,7 +26,7 @@ void loop(void *game) {
 
 int main() {
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-	InitWindow(800, 600, "Connections");
+	InitWindow(128 * 5, 128 * 5, "Connections");
 
 	// Create the base game data
 	game_data *data = malloc(sizeof(game_data));

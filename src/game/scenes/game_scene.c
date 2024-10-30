@@ -75,14 +75,43 @@ void game_process(scene *game_scene, game_data *data) {
 	}
 }
 
+#define OFFSET 3
+#define GAP 1
+#define HEALTH_SIZE 5
+
+#define OFFSET_X 3
+#define OFFSET_Y (4 + OFFSET_X * 2)
+#define WIDTH 17
+#define HEIGHT 5
+
 void game_render(scene* game_scene, game_data* data) {
+	// Health
+	int base_x = OFFSET;
+	for (int i = 0; i < data->princess_lives; i++) {
+		DrawRectangle(base_x, OFFSET, HEALTH_SIZE, HEALTH_SIZE, PINK);
+		DrawRectangleLines(base_x, OFFSET, HEALTH_SIZE, HEALTH_SIZE, DARKPURPLE);
+		base_x += HEALTH_SIZE + GAP;
+	}
+
+	// Empty background
+	DrawRectangle(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, DARKGRAY);
+
+	float elapsed = data->tugger->tugger.cooldown->timer.timer;
+	float filled_width = (elapsed / PLAYER_TUG_COOLDOWN) * WIDTH;
+
+	// Filled background
+	if (data->tugger->tugger.cooldown->timer.enabled) DrawRectangle(OFFSET_X, OFFSET_Y, filled_width, HEIGHT, RED);
+	else DrawRectangle(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, GREEN);
+
+	// Border
+	DrawRectangleLines(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, BLACK);
 }
 
 scene* game_scene_create(game_data* data) {
 	scene* s = scene_create(game_process, game_render);
 
 	// creating player and adding to scene
-	data->player = player_create(s, (Vector2){0, 0});
+	data->player = player_create(s, data, (Vector2){0, 0});
 	scene_add_entity(s, data->player);
 
 	// Princess

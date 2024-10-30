@@ -23,6 +23,8 @@ typedef struct game_data {
 	princess_state princess_state;
 	int princess_lives;
 
+	struct component* tugger;
+
 	struct component* enemy_spawn_timer;
 	float enemy_spawn_time;
 

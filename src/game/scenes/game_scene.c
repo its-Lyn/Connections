@@ -18,16 +18,6 @@
 
 #include "game/layers.h"
 
-void on_panic_time_out(game_data* data) {
-	// 1/5 chance for the princess to get agitated.
-	if (rand() % 5 == 0) data->princess_state = STATE_AGITATED;
-}
-
-void on_run_time_out(game_data* data) {
-	// Calm the woman down
-	if (data->princess_state == STATE_AGITATED) data->princess_state = STATE_CALM;
-}
-
 // Adds an enemy to the *MAIN SCENE* every timeout
 void on_enemy_spawn_time_out(game_data* data) {
 	// TODO: Enemy variety.
@@ -96,18 +86,7 @@ scene* game_scene_create(game_data* data) {
 	scene_add_entity(s, player);
 
 	// Princess
-	data->princess = princess_create(s, (Vector2){20, 10}, player);
-
-	// Add panic timer.
-	data->princess_timer = timer_engine_create(2.0f, true, false, on_panic_time_out);
-	data->princess_state = STATE_CALM;
-
-	// Add run imer.
-	data->princess_run_timer = timer_engine_create(1.5f, false, true, on_run_time_out);
-
-	entity_add_component(data->princess, data->princess_run_timer);
-	entity_add_component(data->princess, data->princess_timer);
-
+	data->princess = princess_create(data, s, (Vector2){20, 10}, player);
 	scene_add_entity(s, data->princess);
 
 	// Add enemy handler and spawner.

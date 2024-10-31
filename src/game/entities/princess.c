@@ -48,7 +48,7 @@ void on_iframe_time_out(game_data* data) {}
 entity* princess_create(game_data* data, scene* s, Vector2 position, entity* player) {
 	entity* princess = entity_create(position, PRINCESS_SPEED);
 
-	entity_add_component(princess, sprite_create("assets/princess1.png", (Vector2){-2, -4}, WHITE, false));
+	entity_add_component(princess, sprite_create("assets/princess.png", (Vector2){-2, -4}, WHITE, false));
 	entity_add_component(princess, connection_create(player, COLOR_BROWN, 28.0f, 8.0f));
 	entity_add_component(princess, princess_move_create(princess, player));
 

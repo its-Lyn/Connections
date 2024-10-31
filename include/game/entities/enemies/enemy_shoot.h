@@ -5,4 +5,7 @@
 #include "engine/scenes/scene.h"
 #include "engine/entity.h"
 
-struct entity* enemy_shoot_create(scene* s, Vector2 position, float speed, struct scene* handler_scene, struct entity* princess);
+#define SKULLBAT_SPEED_MIN 10.0f
+#define SKULLBAT_SPEED_MAX 15.0f
+
+struct entity* enemy_shoot_create(scene* s, Vector2 position, struct entity* princess);

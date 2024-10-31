@@ -80,8 +80,8 @@ void spawn_random_enemy(Vector2 pos, game_data* data) {
 	entity* enemy;
 
 	// 1/4 chance to spawn a shooter
-	if (rand_int(0, 4) == 1) enemy = enemy_shoot_create(data->main_scene, pos, rand_float(25, 40), data->main_scene, data->princess);
-	else enemy = enemy_normal_create(data->main_scene, pos, rand_float(20, 30), data->princess);
+	if (rand_int(0, 4) == 1) enemy = enemy_shoot_create(data->main_scene, pos, data->princess);
+	else enemy = enemy_normal_create(data->main_scene, pos, data->princess);
 
 	scene_add_entity(data->main_scene, enemy);
 }

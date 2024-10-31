@@ -10,7 +10,8 @@ OPTIONS_WEB=-I$(RAYLIB_SRC) -L$(RAYLIB_SRC) -sUSE_GLFW=3 -sGL_ENABLE_GET_PROC_AD
 
 SOURCES := $(shell find src -name '*.c')
 
-SHELL_FILE=shell.html
+SHELL_FILE=web/shell.html
+FAVICON=web/favicon.png
 
 TARGET ?= desktop
 
@@ -31,6 +32,7 @@ ifeq ($(TARGET), desktop)
 	cp -r assets $(OUT_DEBUG)/assets
 	$(CC) $(OPTIONS) $(DEBUG) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_DEBUG)/$(BINARY)
 else ifeq ($(TARGET), web)
+	cp favicon.png $(OUT_DEBUG)/
 	$(EMCC) $(OPTIONS) $(OPTIONS_WEB) $(DEBUG) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_DEBUG)/index.html
 else
 	@echo Invalid platform!
@@ -49,6 +51,7 @@ ifeq ($(TARGET), desktop)
 	cp -r assets $(OUT_RELEASE)/assets
 	$(CC) $(OPTIONS) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_RELEASE)/$(BINARY)
 else ifeq ($(TARGET), web)
+	cp $(FAVICON) $(OUT_RELEASE)/
 	$(EMCC) $(OPTIONS) $(OPTIONS_WEB) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_RELEASE)/index.html --shell-file $(SHELL_FILE)
 else
 	@echo Invalid platform!

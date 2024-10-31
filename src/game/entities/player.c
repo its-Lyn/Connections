@@ -9,12 +9,15 @@
 
 entity* player_create(scene* s, game_data* data, Vector2 position) {
 	entity* player = entity_create(position, PLAYER_MAX_SPEED);
+
 	entity_add_component(player, sprite_create("assets/knight.png", (Vector2){0, -2}, WHITE, true));
 	entity_add_component(player, player_move_create(player));
 
 	component* tugger = tugger_create(player);
 	entity_add_component(player, tugger);
 	data->tugger = tugger;
+
+	entity_add_component(player, player_attack_create());
 
 	return player;
 }

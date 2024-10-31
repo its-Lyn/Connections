@@ -11,7 +11,7 @@ typedef struct {
 
 	bool enabled;
 	bool one_shot;
-	void (*on_timeout)(game_data*);
+	void (*on_timeout)(struct component*, game_data*);
 } timer_data;
 
-struct component* timer_engine_create(float timeout, bool enabled, bool one_shot, void (*on_timeout)(game_data*));
+struct component* timer_engine_create(float timeout, bool enabled, bool one_shot, void (*on_timeout)(struct component*, game_data*));

@@ -10,13 +10,13 @@
 #include "game/scenes/game_scene.h"
 #include "game/colors.h"
 
-void on_panic_time_out(game_data* data) {
+void on_panic_time_out(component* _timer, game_data* data) {
 	// setting state to agitated to move around
 	data->princess_state = STATE_AGITATED;
 	data->princess_run_timer->timer.enabled = true; // restart timer to go back to calm
 }
 
-void on_run_time_out(game_data* data) {
+void on_run_time_out(component* _timer, game_data* data) {
 	// Calm the woman down
 	if (data->princess_state != STATE_AGITATED) return;
 	data->princess_state = STATE_CALM;
@@ -43,7 +43,7 @@ void on_collided(scene* s, component* self, component* other, game_data* data) {
 	}
 }
 
-void on_iframe_time_out(game_data* data) {}
+void on_iframe_time_out(component* _timer, game_data* data) {}
 
 entity* princess_create(game_data* data, scene* s, Vector2 position, entity* player) {
 	entity* princess = entity_create(position, PRINCESS_SPEED);

@@ -87,7 +87,7 @@ void spawn_random_enemy(Vector2 pos, game_data* data) {
 }
 
 // Adds an enemy to the *MAIN SCENE* every timeout
-void on_enemy_spawn_time_out(game_data* data) {
+void on_enemy_spawn_time_out(component* _timer, game_data* data) {
 	int side = rand_int(0, 3);
 
 	// 1/5 chance to spawn enemy on opposite side of screen.

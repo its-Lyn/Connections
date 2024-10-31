@@ -16,6 +16,7 @@ typedef enum {
 	TYPE_BULLET_HANDLER,
 	TYPE_BULLET_MOVER,
 	TYPE_MOVER_SPRITE_FLIP,
+	TYPE_PLAYER_ATTACK
 } component_type;
 
 #include "engine/entity.h"
@@ -34,6 +35,7 @@ typedef enum {
 #include "game/components/bullet_handler.h"
 #include "game/components/bullet_mover.h"
 #include "game/components/mover_sprite_flip.h"
+#include "game/components/player_attack.h"
 
 typedef struct component {
 	struct entity* owner;

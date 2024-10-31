@@ -9,6 +9,7 @@
 #include "game/components/collider.h"
 #include "game/components/bullet_mover.h"
 #include "game/entities/bullet.h"
+#include "game/entities/enemies/enemy_shoot.h"
 #include "game/layers.h"
 #include "game/colors.h"
 
@@ -21,6 +22,7 @@ entity* bullet_create(entity* target, Vector2 start_pos, float speed, game_data*
 	entity* bullet = entity_create(start_pos, speed);
 	entity_add_component(bullet, rectangle_create((Vector2){4, 4}, COLOR_RED));
 	entity_add_component(bullet, bullet_mover_create(Vector2Normalize(Vector2Subtract(target->pos, start_pos))));
+	entity_add_component(bullet, destroy_offscreen_create((Vector2){BULLET_WIDTH, BULLET_HEIGHT}));
 	entity_add_component(bullet, collider_create(data->main_scene, (Vector2){2, 2}, 3, LAYER_ENEMIES, LAYER_PRINCESS, on_bullet_collide));
 
 	return bullet;

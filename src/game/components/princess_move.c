@@ -19,6 +19,12 @@ void princess_move_update(component* c, game_data* data) {
 		// We have not picked a new direction yet.
 		float angle = ((float)rand() / (float)RAND_MAX) * 2.0f * PI;
 		c->princess_move.dir = (Vector2) { sin(angle), cos(angle) };
+	} else {
+		// We already picked a direction, redirect based on player's pulling
+		Vector2 vel_dir = Vector2Normalize(c->owner->vel);
+		float t = Clamp(PRINCESS_PULL_INFLUENCE * GetFrameTime(), 0, 1);
+		Vector2 influenced_dir = Vector2Lerp(c->princess_move.dir, vel_dir, t);
+		c->princess_move.dir = Vector2Normalize(influenced_dir);
 	}
 
 	// Clamp the princess position inside the screen and bounce on the edges
@@ -40,7 +46,7 @@ void princess_move_update(component* c, game_data* data) {
 	} else if (pos.y > data->game_size.y - 8) {
 		c->princess_move.dir.y *= -1;
 		c->owner->vel.y *= -0.5;
-c->owner->pos.y = data->game_size.y - 8;
+		c->owner->pos.y = data->game_size.y - 8;
 	}
 
 	Vector2 goal_vel = Vector2Scale(c->princess_move.dir, c->owner->speed);

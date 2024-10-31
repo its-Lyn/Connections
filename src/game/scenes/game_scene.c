@@ -83,27 +83,25 @@ Vector2 get_position(int side, game_data* data) {
 	return pos;
 }
 
-void spawn_random_enemy(Vector2 pos, component* collider, game_data* data) {
+void spawn_random_enemy(Vector2 pos, game_data* data) {
 	entity* enemy;
 
 	// 1/4 chance to spawn a shooter
-	if (rand_int(0, 4) == 1) enemy = enemy_shoot_create(pos, rand_float(25, 40), data->main_scene, data->princess);
-	else enemy = enemy_normal_create(pos, rand_float(20, 30), data->princess);
+	if (rand_int(0, 4) == 1) enemy = enemy_shoot_create(data->main_scene, pos, rand_float(25, 40), data->main_scene, data->princess);
+	else enemy = enemy_normal_create(data->main_scene, pos, rand_float(20, 30), data->princess);
 
-	entity_add_component(enemy, collider);
 	scene_add_entity(data->main_scene, enemy);
 }
 
 // Adds an enemy to the *MAIN SCENE* every timeout
 void on_enemy_spawn_time_out(game_data* data) {
 	int side = rand_int(0, 3);
-	component* collider = collider_create(data->main_scene, (Vector2){5, 4}, 3, LAYER_ENEMIES, LAYER_PRINCESS, NULL);
 
 	// 1/5 chance to spawn enemy on opposite side of screen.
 	if (rand_int(0, 5) == 1)
-		spawn_random_enemy(get_opposite_position(side, data), collider, data);
+		spawn_random_enemy(get_opposite_position(side, data), data);
 
-	spawn_random_enemy(get_position(side, data), collider, data);
+	spawn_random_enemy(get_position(side, data), data);
 
 	// Pick new spawn time.
 	data->enemy_spawn_time = rand_float(2.0f, 4.5f);

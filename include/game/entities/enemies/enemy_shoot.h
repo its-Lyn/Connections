@@ -5,4 +5,4 @@
 #include "engine/scenes/scene.h"
 #include "engine/entity.h"
 
-struct entity* enemy_shoot_create(Vector2 position, float speed, struct scene* handler_scene, struct entity* princess);
+struct entity* enemy_shoot_create(scene* s, Vector2 position, float speed, struct scene* handler_scene, struct entity* princess);

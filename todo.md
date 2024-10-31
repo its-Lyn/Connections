@@ -3,7 +3,7 @@
 - [x] **Collision**
 - [ ] Player attack
 - [ ] Enemy HP
-- [ ] Player/Princess HP (decide if player has HP)
+- [x] Princess HP
 
 ## Princess Mechanics
 - [x] Princess movement

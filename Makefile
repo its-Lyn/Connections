@@ -6,7 +6,7 @@ DEBUG=-fsanitize=address,undefined -g3
 LIBS=-lraylib -lm
 
 OPTIONS=-Wall -Wextra -Werror -Wno-unused-parameter
-OPTIONS_WEB=-I$(RAYLIB_SRC) -L$(RAYLIB_SRC) -sUSE_GLFW=3 -sGL_ENABLE_GET_PROC_ADDRESS -DPLATFORM_WEB
+OPTIONS_WEB=-I$(RAYLIB_SRC) -L$(RAYLIB_SRC) -sUSE_GLFW=3 -sGL_ENABLE_GET_PROC_ADDRESS -DPLATFORM_WEB --preload-file assets
 
 SOURCES := $(shell find src -name '*.c')
 
@@ -25,10 +25,10 @@ debug:
 	fi
 
 	mkdir -p $(OUT_DEBUG)
-	cp -r assets $(OUT_DEBUG)/assets
 
 
 ifeq ($(TARGET), desktop)
+	cp -r assets $(OUT_DEBUG)/assets
 	$(CC) $(OPTIONS) $(DEBUG) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_DEBUG)/$(BINARY)
 else ifeq ($(TARGET), web)
 	$(EMCC) $(OPTIONS) $(OPTIONS_WEB) $(DEBUG) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_DEBUG)/index.html
@@ -44,9 +44,9 @@ release:
 	fi
 
 	mkdir -p $(OUT_RELEASE)
-	cp -r assets $(OUT_RELEASE)/assets
 
 ifeq ($(TARGET), desktop)
+	cp -r assets $(OUT_RELEASE)/assets
 	$(CC) $(OPTIONS) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_RELEASE)/$(BINARY)
 else ifeq ($(TARGET), web)
 	$(EMCC) $(OPTIONS) $(OPTIONS_WEB) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_RELEASE)/index.html --shell-file $(SHELL_FILE)

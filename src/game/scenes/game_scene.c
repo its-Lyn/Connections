@@ -84,6 +84,11 @@ void game_process(scene *game_scene, game_data *data) {
 #define WIDTH 17
 #define HEIGHT 5
 
+void game_pre_render(scene* game_scene, game_data* data) {
+	// drawing background
+	DrawTexture(data->bg_texture, 0, 0, WHITE);
+}
+
 void game_render(scene* game_scene, game_data* data) {
 	// Health
 	int base_x = OFFSET;
@@ -108,7 +113,7 @@ void game_render(scene* game_scene, game_data* data) {
 }
 
 scene* game_scene_create(game_data* data) {
-	scene* s = scene_create(game_process, game_render);
+	scene* s = scene_create(game_process, game_render, game_pre_render);
 
 	// creating player and adding to scene
 	data->player = player_create(s, data, (Vector2){0, 0});

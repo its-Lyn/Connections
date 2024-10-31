@@ -9,13 +9,14 @@ void scene_change(scene* current_scene, scene* new_scene) {
 	current_scene->goto_scene = new_scene;
 }
 
-scene* scene_create(void (*process)(scene* s, game_data* data), void (*render)(scene *s, game_data* data)) {
+scene* scene_create(void (*process)(scene* s, game_data* data), void (*render)(scene* s, game_data* data), void (*pre_render)(scene* s, game_data* data)) {
 	scene* new_scene = (scene*)malloc(sizeof(scene));
 
 	new_scene->entities = NULL;
 	new_scene->colliders = NULL;
 	new_scene->process = process;
 	new_scene->render  = render;
+	new_scene->pre_render = pre_render;
 	new_scene->goto_scene = NULL;
 
 	return new_scene;

@@ -24,6 +24,11 @@ void scene_update_entities(scene* s, game_data* data)
 
 void scene_draw_entities(scene* s, game_data* data)
 {
+	// scene pre-draw for sprites meant to be below everything else
+	if (s->pre_render != NULL) {
+		s->pre_render(s, data);
+	}
+
 	// drawing scene entities
 	for (linked_list* elem = s->entities; elem != NULL; elem = elem->next) {
 		entity* e = elem->data;

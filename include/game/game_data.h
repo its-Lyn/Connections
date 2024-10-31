@@ -30,6 +30,8 @@ typedef struct game_data {
 
 	struct entity* player;
 
+	Texture2D bg_texture;
+
 	RenderTexture2D renderer;
 
 	Vector2 game_size;

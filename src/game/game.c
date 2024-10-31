@@ -31,6 +31,8 @@ void init(game_data* data) {
 	data->renderer = LoadRenderTexture(data->game_size.x, data->game_size.y);
 
 	data->enemy_spawn_time = 2.0f;
+
+	data->bg_texture = LoadTexture("assets/bg.png");
 }
 
 void process(game_data* data) {
@@ -89,6 +91,9 @@ void render(game_data* data) {
 void kill(game_data* data) {
 	// Unload the game window renderer
 	UnloadRenderTexture(data->renderer);
+
+	// Unload background texture
+	UnloadTexture(data->bg_texture);
 
 	scene_destroy(data->main_scene, data);
 	free(data);

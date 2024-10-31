@@ -12,6 +12,7 @@ typedef struct scene {
 
 	void (*process)(struct scene*, struct game_data*);
 	void (*render)(struct scene*, struct game_data*);
+	void (*pre_render)(struct scene*, struct game_data*);
 
 	struct scene* goto_scene;
 } scene;

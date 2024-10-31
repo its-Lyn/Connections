@@ -14,6 +14,7 @@ entity* enemy_shoot_create(scene* s, Vector2 position, entity* princess) {
 
 	entity_add_component(enemy_shoot, sprite_create("assets/skullbat.png", (Vector2){-2, 0}, WHITE, false));
 	entity_add_component(enemy_shoot, constant_mover_create(speed, princess));
+	entity_add_component(enemy_shoot, mover_sprite_flip_create(enemy_shoot));
 
 	entity_add_component(enemy_shoot, bullet_handler_create(1.5f, s, princess));
 

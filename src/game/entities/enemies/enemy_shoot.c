@@ -8,8 +8,23 @@
 #include "game/components/bullet_handler.h"
 #include "game/layers.h"
 
+#include <raymath.h>
+
+#include "game/components/enemy_health.h"
 static void on_collision(scene* s, component* self, component* other, game_data* data) {
-	scene_queue_remove(s, self->owner);
+	component* timer = entity_get_component(self->owner, TYPE_TIMER);
+	if (timer->timer.enabled) return;
+
+	component* health = entity_get_component(self->owner, TYPE_ENEMY_HEALTH);
+	health->enemy_health.hp--;
+	if (health->enemy_health.hp <= 0)
+		scene_queue_remove(s, self->owner);
+
+	timer->timer.timer = 0;
+	timer->timer.enabled = true;
+
+	Vector2 dir = Vector2Normalize(Vector2Subtract(self->owner->pos, other->owner->pos));
+	self->owner->vel = Vector2Scale(dir, SKULLBAT_KNOCKBACK);
 }
 
 entity* enemy_shoot_create(scene* s, Vector2 position, entity* princess) {
@@ -24,6 +39,10 @@ entity* enemy_shoot_create(scene* s, Vector2 position, entity* princess) {
 	entity_add_component(enemy_shoot, bullet_handler_create(1.5f, s, princess));
 
 	entity_add_component(enemy_shoot, collider_create(s, (Vector2){5, 4}, 3, LAYER_ENEMIES, LAYER_SLASH, on_collision));
+
+	entity_add_component(enemy_shoot, timer_engine_create(0.9f, false, true, NULL));
+
+	entity_add_component(enemy_shoot, enemy_health_create(SKULLBAT_HEALTH));
 
 	return enemy_shoot;
 }

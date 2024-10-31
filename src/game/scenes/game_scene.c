@@ -50,7 +50,7 @@ void on_enemy_spawn_time_out(game_data* data) {
 	}
 
 	entity* enemy_normal = enemy_normal_create(enemy_pos, rand_float(20, 30), data->princess);
-	entity_add_component(enemy_normal, collider_create(data->main_scene, (Vector2){4, 4}, 5, LAYER_ENEMIES, LAYER_PRINCESS, NULL));
+	entity_add_component(enemy_normal, collider_create(data->main_scene, (Vector2){5, 4}, 3, LAYER_ENEMIES, LAYER_PRINCESS, NULL));
 	scene_add_entity(data->main_scene, enemy_normal);
 }
 

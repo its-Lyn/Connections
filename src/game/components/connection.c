@@ -9,7 +9,7 @@
 
 #define ROPE_MIN_TENSION  10.0f
 #define ROPE_MAX_TENSION 750.0f
-#define PRINCESS_TENSION_RESISTANCE 1.6f
+#define PRINCESS_TENSION_RESISTANCE 1.5f
 
 void connection_update(component* c, game_data* data) {
 	entity* princess = c->owner;

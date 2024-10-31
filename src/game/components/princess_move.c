@@ -21,10 +21,24 @@ void princess_move_update(component* c, game_data* data) {
 		c->princess_move.dir = (Vector2) { sin(angle), cos(angle) };
 	} else {
 		// We already picked a direction, redirect based on player's pulling
-		Vector2 vel_dir = Vector2Normalize(c->owner->vel);
-		float t = Clamp(PRINCESS_PULL_INFLUENCE * GetFrameTime(), 0, 1);
-		Vector2 influenced_dir = Vector2Lerp(c->princess_move.dir, vel_dir, t);
-		c->princess_move.dir = Vector2Normalize(influenced_dir);
+
+		// get angles of current direction and velocity direction
+		float curr_angle = Vector2Angle((Vector2){0, -1}, c->princess_move.dir);
+		float vel_angle  = Vector2Angle((Vector2){0, -1}, c->owner->vel);
+
+		if (curr_angle != vel_angle) {
+			// get rotation left to reach the velocity direction from current direction
+			float rot_left = vel_angle - curr_angle;
+
+			// going in shortest direction
+			if (fabsf(rot_left) > PI) {
+				rot_left = (rot_left > 0? -1 : 1) * (2*PI + fabsf(rot_left)); // no TAU constant :c
+			}
+
+			// change direction
+			float new_angle = curr_angle + Clamp(rot_left, -PRINCESS_PULL_INFLUENCE * GetFrameTime(), PRINCESS_PULL_INFLUENCE * GetFrameTime());
+			c->princess_move.dir = (Vector2){sin(new_angle), -cos(new_angle)};
+		}
 	}
 
 	// update sprite direction

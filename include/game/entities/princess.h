@@ -16,6 +16,6 @@
 
 #define PRINCESS_KNOCKBACK 200.0f
 
-#define PRINCESS_PULL_INFLUENCE 25.0f
+#define PRINCESS_PULL_INFLUENCE 1.2f
 
 struct entity* princess_create(game_data* data, scene* s, Vector2 position, struct entity* player);

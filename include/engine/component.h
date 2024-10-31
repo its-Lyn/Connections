@@ -13,7 +13,9 @@ typedef enum {
 	TYPE_COLLIDER,
 	TYPE_TUGGER,
 	TYPE_SPRITE,
-	TYPE_FLASH
+	TYPE_FLASH,
+	TYPE_BULLET_HANDLER,
+	TYPE_BULLET_MOVER
 } component_type;
 
 #include "engine/entity.h"
@@ -30,6 +32,8 @@ typedef enum {
 #include "game/components/tugger.h"
 #include "game/components/sprite.h"
 #include "game/components/flash.h"
+#include "game/components/bullet_handler.h"
+#include "game/components/bullet_mover.h"
 
 typedef struct component {
 	struct entity* owner;
@@ -51,6 +55,8 @@ typedef struct component {
 		tugger_data tugger;
 		sprite_data sprite;
 		flash_data flash;
+		bullet_handler_data bullet_handler;
+		bullet_mover_data bullet_mover;
 	};
 } component;
 

@@ -3,6 +3,8 @@
 #include "game/components/flash.h"
 
 void flash_update(component* c, game_data* data) {
+	if (!c->flash.flashing) return;
+
 	switch (c->flash.state) {
 		case FLASH_FADE_IN:
 			c->flash.alpha += c->flash.speed * GetFrameTime();

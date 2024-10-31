@@ -12,5 +12,7 @@ void scene_destroy(scene* s, game_data* data);
 void scene_add_entity(scene* s, struct entity* e);
 void scene_remove_entity(scene* s, struct entity* e);
 
+void scene_queue_remove(scene* s, struct entity* e);
+
 void scene_add_collider(scene* s, component* collider);
 void scene_remove_collider(scene* s, component* collider);

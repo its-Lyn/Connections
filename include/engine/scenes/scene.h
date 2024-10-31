@@ -10,6 +10,8 @@ typedef struct scene {
 	linked_list* entities;
 	linked_list* colliders;
 
+	linked_list* delete_queue;
+
 	void (*process)(struct scene*, struct game_data*);
 	void (*render)(struct scene*, struct game_data*);
 	void (*pre_render)(struct scene*, struct game_data*);

@@ -14,6 +14,7 @@ scene* scene_create(void (*process)(scene* s, game_data* data), void (*render)(s
 
 	new_scene->entities = NULL;
 	new_scene->colliders = NULL;
+	new_scene->delete_queue = NULL;
 	new_scene->process = process;
 	new_scene->render  = render;
 	new_scene->pre_render = pre_render;
@@ -56,4 +57,11 @@ void scene_add_collider(scene* s, component* collider) {
 void scene_remove_collider(scene* s, component* collider) {
 	if (collider->collider.list_elem == NULL) return;
 	s->colliders = linked_list_delete_element(s->colliders, collider->collider.list_elem);
+}
+
+void scene_queue_remove(scene* s, struct entity* e) {
+	if (e->queued_for_delete) return;
+
+	s->delete_queue = linked_list_insert(s->delete_queue, e);
+	e->queued_for_delete = true;
 }

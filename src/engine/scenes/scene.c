@@ -3,7 +3,6 @@
 #include "engine/scenes/scene_utilities.h"
 
 #include <stdlib.h>
-
 void scene_update_entities(scene* s, game_data* data)
 {
 	// updating scene entities
@@ -15,6 +14,19 @@ void scene_update_entities(scene* s, game_data* data)
 	// doing the scene update itself
 	if (s->process != NULL)
 		s->process(s, data);
+
+	// Remove all the entities in queue
+	linked_list* elem = s->delete_queue;
+	while (elem != NULL) {
+		linked_list* next_elem = elem->next;
+
+		entity* e = elem->data;
+		entity_destroy(e, data);
+		free(elem);
+
+		elem = next_elem;
+	}
+	s->delete_queue = NULL;
 
 	// if scene changed, update main scene and delete current scene
 	if (s->goto_scene == NULL) return;

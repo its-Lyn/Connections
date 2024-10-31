@@ -16,7 +16,7 @@ void bullet_handler_update(component* c, game_data* data) {
 		c->bullet_handler.bullet_timer = 0;
 
 		if (rand_int(0, 2) == 1)
-			scene_add_entity(c->bullet_handler.handler_scene, bullet_create(c->bullet_handler.princess, c->owner->pos, 100.0f));
+			scene_add_entity(c->bullet_handler.handler_scene, bullet_create(c->bullet_handler.princess, c->owner->pos, 100.0f, data));
 	}
 }
 

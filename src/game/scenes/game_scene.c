@@ -15,17 +15,10 @@
 #include "game/entities/enemies/enemy_shoot.h"
 
 #include "game/components/timer.h"
-#include "game/components/flash.h"
 
 #include "game/layers.h"
 
 #include "game/colors.h"
-
-// Flash drawing, we don't do this in the component because it needs to be over everything.
-void flash_draw(game_data* data) {
-	if (data->flash->flash.flashing)
-		DrawRectangleRec(data->flash->flash.size, Fade(data->flash->flash.colour, data->flash->flash.alpha));
-}
 
 Vector2 get_opposite_position(int side, game_data* data) {
 	Vector2 pos;
@@ -165,12 +158,6 @@ void game_render(scene* game_scene, game_data* data) {
 
 	// Border
 	DrawRectangleLines(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, COLOR_BROWN);
-
-	// Flashing
-	// We use additive blend mode to get rid of the stupid grey area.
-	BeginBlendMode(BLEND_ADDITIVE);
-		flash_draw(data);
-	EndBlendMode();
 }
 
 scene* game_scene_create(game_data* data) {
@@ -179,9 +166,6 @@ scene* game_scene_create(game_data* data) {
 	// creating player and adding to scene
 	data->player = player_create(s, data, (Vector2){(data->game_size.x - PLAYER_WIDTH)/2, (data->game_size.y - PLAYER_HEIGHT)/2});
 	scene_add_entity(s, data->player);
-
-	// Add global flasher
-	data->flash = flash_create(WHITE, (Rectangle){ 0, 0, data->game_size.x, data->game_size.y }, 14.55f);
 
 	// Princess
 	data->princess = princess_create(data, s, (Vector2){data->game_size.x/2 + 10, data->game_size.y/2 + 10}, data->player);

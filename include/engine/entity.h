@@ -16,6 +16,8 @@ typedef struct entity {
 	Vector2 pos, vel;
 	float speed;
 	linked_list* components;
+
+	bool queued_for_delete;
 } entity;
 
 entity* entity_create(Vector2 position, float speed);

@@ -33,6 +33,9 @@ void on_collided(scene* s, component* self, component* other, game_data* data) {
 			return;
 		}
 
+		// Flash the screen
+		data->flash->flash.flashing = true;
+
 		// iframes
 		data->princess_iframe->timer.timer = 0;
 		data->princess_iframe->timer.enabled = true;
@@ -71,6 +74,7 @@ entity* princess_create(game_data* data, scene* s, Vector2 position, entity* pla
 	entity_add_component(princess, data->princess_timer);
 	entity_add_component(princess, data->princess_stun_timer);
 	entity_add_component(princess, data->princess_iframe);
+	entity_add_component(princess, data->flash);
 
 	data->princess_state = STATE_CALM;
 

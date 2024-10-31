@@ -28,26 +28,30 @@ void flash_draw(game_data* data) {
 
 Vector2 get_opposite_position(int side, game_data* data) {
 	Vector2 pos;
-    switch (side) {
-        case 0: // Top -> Bottom
-            pos.x = rand_int(0, data->game_size.x);
-            pos.y = data->game_size.y;
-            break;
-        case 1: // Right -> Left
-            pos.x = -8;
-            pos.y = rand_int(0, data->game_size.y);
-            break;
-        case 2: // Bottom -> Top
-            pos.x = rand_int(0, data->game_size.x);
-            pos.y = -8;
-            break;
-        case 3: // Left -> Right
-            pos.x = data->game_size.x;
-            pos.y = rand_int(0, data->game_size.y);
-            break;
-    }
+	switch (side) {
+		case 0: // Top -> Bottom
+			pos.x = rand_int(0, data->game_size.x);
+			pos.y = data->game_size.y;
 
-    return pos;
+			break;
+		case 1: // Right -> Left
+			pos.x = -8;
+			pos.y = rand_int(0, data->game_size.y);
+
+			break;
+		case 2: // Bottom -> Top
+			pos.x = rand_int(0, data->game_size.x);
+			pos.y = -8;
+
+			break;
+		case 3: // Left -> Right
+			pos.x = data->game_size.x;
+			pos.y = rand_int(0, data->game_size.y);
+
+			break;
+	}
+
+	return pos;
 }
 
 // Adds an enemy to the *MAIN SCENE* every timeout

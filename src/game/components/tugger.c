@@ -8,8 +8,6 @@
 #include "game/entities/player.h"
 
 void update(component* c, game_data* data) {
-	c->tugger.player_sprite->sprite.tint = c->tugger.cooldown->timer.enabled? GRAY : WHITE; // tinting player to show cooldown
-
 	if (c->tugger.cooldown->timer.enabled || !IsKeyPressed(KEY_SPACE)) return;
 	// pressed tug button and isnt on cooldown
 
@@ -35,7 +33,6 @@ component* tugger_create(entity* player) {
 	component* c = component_create(TYPE_TUGGER, update, tugger_draw, NULL);
 
 	c->tugger.cooldown = timer_engine_create(PLAYER_TUG_COOLDOWN, false, true, NULL);
-	c->tugger.player_sprite = entity_get_component(player, TYPE_SPRITE);
 
 	entity_add_component(player, c->tugger.cooldown);
 

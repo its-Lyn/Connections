@@ -4,6 +4,7 @@
 #include "engine/entity.h"
 #include "engine/component.h"
 #include "engine/scenes/scene_utilities.h"
+#include "engine/utilities/rand.h"
 
 #include "game/scenes/game_scene.h"
 #include "game/entities/player.h"
@@ -14,9 +15,9 @@
 
 #include "game/components/timer.h"
 
-#include "engine/utilities/rand.h"
-
 #include "game/layers.h"
+
+#include "game/colors.h"
 
 // Adds an enemy to the *MAIN SCENE* every timeout
 void on_enemy_spawn_time_out(game_data* data) {
@@ -75,6 +76,11 @@ void game_process(scene *game_scene, game_data *data) {
 	}
 }
 
+void game_pre_render(scene* game_scene, game_data* data) {
+	// drawing background
+	DrawTexture(data->bg_texture, 0, 0, WHITE);
+}
+
 #define OFFSET 3
 #define GAP 1
 #define HEALTH_SIZE 5
@@ -84,43 +90,38 @@ void game_process(scene *game_scene, game_data *data) {
 #define WIDTH 17
 #define HEIGHT 5
 
-void game_pre_render(scene* game_scene, game_data* data) {
-	// drawing background
-	DrawTexture(data->bg_texture, 0, 0, WHITE);
-}
-
 void game_render(scene* game_scene, game_data* data) {
 	// Health
 	int base_x = OFFSET;
 	for (int i = 0; i < data->princess_lives; i++) {
-		DrawRectangle(base_x, OFFSET, HEALTH_SIZE, HEALTH_SIZE, PINK);
-		DrawRectangleLines(base_x, OFFSET, HEALTH_SIZE, HEALTH_SIZE, DARKPURPLE);
+		DrawRectangle(base_x, OFFSET, HEALTH_SIZE, HEALTH_SIZE, COLOR_PINK);
+		DrawRectangleLines(base_x, OFFSET, HEALTH_SIZE, HEALTH_SIZE, COLOR_DARK_RED);
 		base_x += HEALTH_SIZE + GAP;
 	}
 
 	// Empty background
-	DrawRectangle(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, DARKGRAY);
+	DrawRectangle(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, COLOR_DARK_RED);
 
 	float elapsed = data->tugger->tugger.cooldown->timer.timer;
 	float filled_width = (elapsed / PLAYER_TUG_COOLDOWN) * WIDTH;
 
 	// Filled background
-	if (data->tugger->tugger.cooldown->timer.enabled) DrawRectangle(OFFSET_X, OFFSET_Y, filled_width, HEIGHT, RED);
-	else DrawRectangle(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, GREEN);
+	if (data->tugger->tugger.cooldown->timer.enabled) DrawRectangle(OFFSET_X, OFFSET_Y, filled_width, HEIGHT, COLOR_RED);
+	else DrawRectangle(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, COLOR_GREEN);
 
 	// Border
-	DrawRectangleLines(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, BLACK);
+	DrawRectangleLines(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, COLOR_BROWN);
 }
 
 scene* game_scene_create(game_data* data) {
 	scene* s = scene_create(game_process, game_render, game_pre_render);
 
 	// creating player and adding to scene
-	data->player = player_create(s, data, (Vector2){0, 0});
+	data->player = player_create(s, data, (Vector2){(data->game_size.x - PLAYER_WIDTH)/2, (data->game_size.y - PLAYER_HEIGHT)/2});
 	scene_add_entity(s, data->player);
 
 	// Princess
-	data->princess = princess_create(data, s, (Vector2){20, 10}, data->player);
+	data->princess = princess_create(data, s, (Vector2){data->game_size.x/2 + 10, data->game_size.y/2 + 10}, data->player);
 	data->princess_lives = 3;
 	scene_add_entity(s, data->princess);
 

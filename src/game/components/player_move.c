@@ -17,6 +17,9 @@ static void update(component* c, game_data* data) {
 	float y = (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))  - (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP));
 	Vector2 dir = Vector2Normalize((Vector2){x, y});
 
+	// update sprite direction
+	c->player_move.sprite->sprite.fliph = (dir.x > 0.0f) || (dir.x == 0.0f && c->player_move.sprite->sprite.fliph);
+
 	Vector2 goal_vel = Vector2Scale(dir, c->owner->speed);
 
 	float accel = 0;
@@ -31,8 +34,11 @@ static void update(component* c, game_data* data) {
 	c->owner->vel = Vector2MoveTowards(c->owner->vel, goal_vel, accel * GetFrameTime());
 }
 
-component* player_move_create() {
+component* player_move_create(entity* player) {
 	component* c = component_create(TYPE_PLAYER_MOVE, update, NULL, NULL);
+
+	c->player_move.sprite = entity_get_component(player, TYPE_SPRITE);
+
 	return c;
 }
 

@@ -41,6 +41,7 @@ typedef struct component {
 		label_data label;
 		constant_mover_data constant_mover;
 		rectangle_data rectangle;
+		player_move_data player_move;
 		princess_move_data princess_move;
 		connection_data connection;
 		timer_data timer;

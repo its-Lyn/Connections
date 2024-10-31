@@ -22,13 +22,13 @@ void init(game_data* data) {
 	// Set random seed
 	srand(time(NULL));
 
-	data->main_scene = game_scene_create(data);
-
 	data->game_size = (Vector2) { 128, 128 };
 	data->game_scale = 0.0f;
 	data->virt_mouse = (Vector2) { 0,  0 };
 
 	data->renderer = LoadRenderTexture(data->game_size.x, data->game_size.y);
+
+	data->main_scene = game_scene_create(data);
 
 	data->enemy_spawn_time = 2.0f;
 

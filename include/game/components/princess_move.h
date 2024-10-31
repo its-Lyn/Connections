@@ -8,6 +8,7 @@
 typedef struct {
 	struct entity* player;
 	Vector2 dir;
+	struct component* sprite;
 } princess_move_data;
 
-struct component* princess_move_create(struct entity* player);
+struct component* princess_move_create(struct entity* princess, struct entity* player);

@@ -8,6 +8,7 @@
 #include "game/entities/princess.h"
 #include "game/layers.h"
 #include "game/scenes/game_scene.h"
+#include "game/colors.h"
 
 void on_panic_time_out(game_data* data) {
 	// setting state to agitated to move around
@@ -47,9 +48,9 @@ void on_iframe_time_out(game_data* data) {}
 entity* princess_create(game_data* data, scene* s, Vector2 position, entity* player) {
 	entity* princess = entity_create(position, PRINCESS_SPEED);
 
-	entity_add_component(princess, sprite_create("assets/princess.png", (Vector2){0, -2}, WHITE));
-	entity_add_component(princess, connection_create(player, BROWN, 28.0f, 8.0f));
-	entity_add_component(princess, princess_move_create(player));
+	entity_add_component(princess, sprite_create("assets/princess.png", (Vector2){0, -2}, WHITE, false));
+	entity_add_component(princess, connection_create(player, COLOR_BROWN, 28.0f, 8.0f));
+	entity_add_component(princess, princess_move_create(princess, player));
 
 	component* princess_collider = collider_create(s, (Vector2) {4, 4}, 4, LAYER_PRINCESS, LAYER_ENEMIES, on_collided);
 	entity_add_component(princess, princess_collider);

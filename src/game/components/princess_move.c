@@ -27,6 +27,9 @@ void princess_move_update(component* c, game_data* data) {
 		c->princess_move.dir = Vector2Normalize(influenced_dir);
 	}
 
+	// update sprite direction
+	c->princess_move.sprite->sprite.fliph = (c->princess_move.dir.x > 0.0f) || (c->princess_move.dir.x == 0.0f && c->princess_move.sprite->sprite.fliph);
+
 	// Clamp the princess position inside the screen and bounce on the edges
 	Vector2 pos = c->owner->pos;
 	if (pos.x < 0) {
@@ -53,10 +56,12 @@ void princess_move_update(component* c, game_data* data) {
 	c->owner->vel = Vector2MoveTowards(c->owner->vel, goal_vel, PRINCESS_ACCEL * GetFrameTime());
 }
 
-component* princess_move_create(entity* player) {
+component* princess_move_create(entity* princess, entity* player) {
 	component* c = component_create(TYPE_PRINCESS_MOVE, princess_move_update, NULL, NULL);
+
 	c->princess_move.player = player;
 	c->princess_move.dir = Vector2Zero();
+	c->princess_move.sprite = entity_get_component(princess, TYPE_SPRITE);
 
 	return c;
 }

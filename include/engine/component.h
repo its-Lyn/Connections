@@ -16,6 +16,7 @@ typedef enum {
 	TYPE_BULLET_HANDLER,
 	TYPE_BULLET_MOVER,
 	TYPE_MOVER_SPRITE_FLIP,
+	TYPE_ANIMATED_SPRITESHEET
 } component_type;
 
 #include "engine/entity.h"
@@ -33,6 +34,7 @@ typedef enum {
 #include "game/components/sprite.h"
 #include "game/components/bullet_handler.h"
 #include "game/components/bullet_mover.h"
+#include "game/components/animated_spritesheet.h"
 #include "game/components/mover_sprite_flip.h"
 
 typedef struct component {
@@ -57,6 +59,7 @@ typedef struct component {
 		bullet_handler_data bullet_handler;
 		bullet_mover_data bullet_mover;
 		mover_sprite_flip_data mover_sprite_flip;
+		animated_spritesheet_data animated_spritesheet;
 	};
 } component;
 

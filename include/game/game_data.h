@@ -38,4 +38,6 @@ typedef struct game_data {
 	float game_scale;
 
 	Vector2 virt_mouse;
+
+	bool is_paused;
 } game_data;

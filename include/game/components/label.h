@@ -12,7 +12,8 @@ typedef struct {
 	int font_size;
 
 	Vector2 pos;
+	Color colour;
 } label_data;
 
-struct component* label_create(const char* text, Font font, Vector2 pos, int font_size);
+struct component* label_create(const char* text, Font font, Vector2 pos, int font_size, Color colour);
 

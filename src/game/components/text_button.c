@@ -5,7 +5,7 @@
 #include "game/components/text_button.h"
 
 void text_button_update(component* c, game_data* data) {
-	c->text_button.active_colour = c->text_button.hovering ? COLOR_GREEN : WHITE;
+	c->text_button.active_colour = c->text_button.hovering ? COLOR_YELLOW : COLOR_BEIGE;
 
 	if (CheckCollisionPointRec(data->virt_mouse, c->text_button.data)) {
 		if (!c->text_button.hovering && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) return;

@@ -28,6 +28,9 @@ int main() {
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(128 * 5, 128 * 5, "Connections");
 
+	// Do not quit when EXIT is pressed.
+	SetExitKey(KEY_NULL);
+
 	// Create the base game data
 	game_data *data = malloc(sizeof(game_data));
 

@@ -21,6 +21,7 @@ typedef enum {
 	TYPE_DESTROY_OFFSCREEN,
 	TYPE_ENEMY_HEALTH,
 	TYPE_SPEED_DIMINISH,
+	TYPE_TEXT_BUTTON
 } component_type;
 
 #include "engine/entity.h"
@@ -44,6 +45,7 @@ typedef enum {
 #include "game/components/destroy_offscreen.h"
 #include "game/components/enemy_health.h"
 #include "game/components/speed_diminish.h"
+#include "game/components/text_button.h"
 
 typedef struct component {
 	struct entity* owner;
@@ -72,6 +74,7 @@ typedef struct component {
 		destroy_offscreen_data destroy_offscreen;
 		enemy_health_data enemy_health;
 		speed_diminish_data speed_diminish;
+		text_button_data text_button;
 	};
 } component;
 

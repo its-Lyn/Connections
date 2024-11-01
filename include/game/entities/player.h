@@ -21,7 +21,7 @@
 #define SLASH_START_SPEED 300.0f
 #define SLASH_DEACCEL 1000.0f
 #define SLASH_LIFETIME 0.3f
-#define SLASH_COOLDOWN 1.0f
+#define SLASH_COOLDOWN 0.7f
 
 struct entity* player_create(struct scene* s,  game_data* data, Vector2 position);
 

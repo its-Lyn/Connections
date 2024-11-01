@@ -8,7 +8,7 @@
 #define BAT_SPEED_MAX 25.0f
 #define BAT_ACCEL 350.0f
 
-#define BAT_HEALTH 1
+#define BAT_HEALTH 2
 #define BAT_KNOCKBACK 175.0f
 #define BAT_PLAYER_KNOCKBACK 125.0f
 

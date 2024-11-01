@@ -10,7 +10,9 @@ typedef struct {
 	const char* text;
 	Font font;
 	int font_size;
+
+	Vector2 pos;
 } label_data;
 
-struct component* label_create(const char* text, Font font, int font_size);
+struct component* label_create(const char* text, Font font, Vector2 pos, int font_size);
 

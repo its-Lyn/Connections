@@ -38,8 +38,29 @@ static void update(component* c, game_data* data) {
 	}
 }
 
+// ew... wrong english
+#include "game/colors.h"
+
+#define HEIGHT 3
+#define WIDTH 10
+
+#define OFFSET_Y (HEIGHT + 3)
+#define OFFSET_X 1
+void player_attack_draw(component* c, game_data* data) {
+	if (c->player_attack.cooldown->timer.timer == 0) return;
+
+	// Background
+	DrawRectangle(c->owner->pos.x - OFFSET_X, c->owner->pos.y - OFFSET_Y, WIDTH, HEIGHT, COLOR_RED);
+
+	// Fill
+	DrawRectangle(c->owner->pos.x - OFFSET_X, c->owner->pos.y - OFFSET_Y, (c->player_attack.cooldown->timer.timer / SLASH_COOLDOWN) * WIDTH, HEIGHT, COLOR_PINK);
+
+	// Border
+	DrawRectangleLines(c->owner->pos.x - OFFSET_X, c->owner->pos.y - OFFSET_Y, WIDTH, HEIGHT, COLOR_DARK_RED);
+}
+
 component* player_attack_create(entity* owner) {
-	component* c = component_create(TYPE_PLAYER_ATTACK, update, NULL, NULL);
+	component* c = component_create(TYPE_PLAYER_ATTACK, update, player_attack_draw, NULL);
 
 	component* cooldown = timer_engine_create(SLASH_COOLDOWN, false, true, NULL);
 	entity_add_component(owner, cooldown);

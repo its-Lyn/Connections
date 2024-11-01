@@ -32,7 +32,7 @@ ifeq ($(TARGET), desktop)
 	cp -r assets $(OUT_DEBUG)/assets
 	$(CC) $(OPTIONS) $(DEBUG) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_DEBUG)/$(BINARY)
 else ifeq ($(TARGET), web)
-	cp favicon.png $(OUT_DEBUG)/
+	cp $(FAVICON) $(OUT_DEBUG)/
 	$(EMCC) $(OPTIONS) $(OPTIONS_WEB) $(DEBUG) $(SOURCES) $(LIBS) $(INCLUDE) -o $(OUT_DEBUG)/index.html
 else
 	@echo Invalid platform!

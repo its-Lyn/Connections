@@ -13,6 +13,7 @@
 
 #include "game/game.h"
 #include "game/scenes/game_scene.h"
+#include "game/scenes/main_menu.h"
 #include "game/components/label.h"
 
 void init(game_data* data) {
@@ -28,7 +29,7 @@ void init(game_data* data) {
 
 	data->renderer = LoadRenderTexture(data->game_size.x, data->game_size.y);
 
-	data->main_scene = game_scene_create(data);
+	data->main_scene = main_menu_create(data);
 
 	data->enemy_spawn_time = 2.0f;
 

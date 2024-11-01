@@ -22,6 +22,7 @@
 - [x] Menu screen
 - [x] Death screen
 - [ ] Options screen (?)
+- [ ] Way to show current "difficulty" (enemy spawn speed)
 
 ## Visual Feedback
 - [x] Way to see wether attack is on cooldown

@@ -1,8 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
 #include <raylib.h>
 
-#include <stdlib.h>
-#include <stdio.h>
-
+#include "engine/scenes/scene_utilities.h"
 #include "game/game.h"
 
 #ifdef PLATFORM_WEB
@@ -12,6 +14,8 @@
 // 0 means uncapped
 #define FPS 0
 
+bool end = false;
+
 // Other loop function so it can be compatible with web.
 void loop(void *game) {
 	// We do this because emscripten wants void*
@@ -19,6 +23,19 @@ void loop(void *game) {
 
 	// Update func
 	process(data);
+
+	// check for end
+	if (data->end) {
+		kill(data);
+		CloseWindow();
+		end = true;
+
+#ifdef PLATFORM_WEB
+		emscripten_cancel_main_loop();
+#endif
+
+		return;
+	}
 
 	// Draw func
 	render(data);
@@ -40,11 +57,8 @@ int main() {
 	emscripten_set_main_loop_arg(loop, data, FPS, 1);
 #else
 	SetTargetFPS(FPS);
-	while (!WindowShouldClose()) loop(data);
+	while (!end && !WindowShouldClose()) loop(data);
 #endif
-
-	kill(data);
-	CloseWindow();
 
 	return 0;
 }

@@ -1,9 +1,9 @@
+#include <stdlib.h>
+
 #include "engine/entity.h"
 #include "engine/scenes/scene_utilities.h"
 
 #include "game/game_data.h"
-
-#include <stdlib.h>
 
 void scene_change(scene* current_scene, scene* new_scene) {
 	current_scene->goto_scene = new_scene;

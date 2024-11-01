@@ -41,4 +41,6 @@ typedef struct game_data {
 
 	bool is_paused;
 	bool can_pause;
+
+	bool end;
 } game_data;

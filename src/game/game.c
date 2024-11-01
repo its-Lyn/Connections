@@ -37,6 +37,8 @@ void init(game_data* data) {
 
 	data->is_paused = false;
 	data->can_pause = false;
+
+	data->end = false;
 }
 
 void process(game_data* data) {

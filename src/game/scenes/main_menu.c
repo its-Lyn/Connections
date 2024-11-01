@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "engine/entity.h"
 #include "engine/component.h"
 
@@ -15,6 +17,10 @@
 static void on_play_clicked(component* c, game_data* data) {
 	data->can_pause = true;
 	scene_change(data->main_scene, game_scene_create(data));
+}
+
+static void on_quit_clicked(component* c, game_data* data) {
+	data->end = true;
 }
 
 static void main_menu_update(scene* s, game_data* data) {}
@@ -45,7 +51,7 @@ scene* main_menu_create(game_data* data) {
 
 	// UI Buttons
 	entity_add_component(ui_layer, text_button_create("Play", (Vector2){(data->game_size.x - play_measure.x) / 2 , 60}, on_play_clicked));
-	entity_add_component(ui_layer, text_button_create("Quit", (Vector2){(data->game_size.x - quit_measure.x) / 2, 71}, NULL));
+	entity_add_component(ui_layer, text_button_create("Quit", (Vector2){(data->game_size.x - quit_measure.x) / 2, 71}, on_quit_clicked));
 
 	// BG Details
 	entity_add_component(ui_layer, line_create((Vector2){0, 5}, (Vector2){data->game_size.x, 10}, COLOR_BROWN));

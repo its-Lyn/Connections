@@ -20,7 +20,7 @@ static void update(component* c, game_data* data) {
 
 		c->player_attack.cooldown->timer.enabled = true;
 		c->player_attack.cooldown->timer.timer = 0;
-	} else if (IsKeyPressed(KEY_X)) {
+	} else if (IsKeyPressed(KEY_X) || IsKeyPressed(KEY_LEFT_SHIFT) || IsKeyPressed(KEY_RIGHT_SHIFT)) {
 		Vector2 pos = Vector2Add(data->player->pos, (Vector2){PLAYER_WIDTH/2, PLAYER_HEIGHT/2});
 
 		// get input dir

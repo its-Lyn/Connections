@@ -6,5 +6,5 @@
 
 #include "game/game_data.h"
 
-struct entity* slash_create(game_data* data, Vector2 position);
+struct entity* slash_create(game_data* data, Vector2 position, Vector2 dir);
 

@@ -15,9 +15,7 @@ void bullet_handler_update(component* c, game_data* data) {
 	c->bullet_handler.bullet_timer += GetFrameTime();
 	if (c->bullet_handler.bullet_timer >= c->bullet_handler.buller_timeout) {
 		c->bullet_handler.bullet_timer = 0;
-
-		if (rand_int(0, 2) == 1)
-			scene_add_entity(c->bullet_handler.handler_scene, bullet_create(c->bullet_handler.princess, c->owner->pos, BULLET_SPEED, data));
+		scene_add_entity(c->bullet_handler.handler_scene, bullet_create(c->bullet_handler.princess, c->owner->pos, BULLET_SPEED, data));
 	}
 }
 

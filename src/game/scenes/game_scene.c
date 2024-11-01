@@ -20,6 +20,9 @@
 
 #include "game/colors.h"
 
+#define SPAWN_TIME_MIN 2.5f
+#define SPAWN_TIME_MAX 3.0f
+
 Vector2 get_opposite_position(int side, game_data* data) {
 	Vector2 pos;
 	switch (side) {
@@ -97,7 +100,7 @@ void on_enemy_spawn_time_out(component* _timer, game_data* data) {
 	spawn_random_enemy(get_position(side, data), data);
 
 	// Pick new spawn time.
-	data->enemy_spawn_time = rand_float(2.0f, 4.5f);
+	data->enemy_spawn_time = rand_float(SPAWN_TIME_MIN, SPAWN_TIME_MAX);
 	data->enemy_spawn_timer->timer.timeout = data->enemy_spawn_time;
 }
 

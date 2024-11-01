@@ -12,9 +12,11 @@
 entity* player_create(scene* s, game_data* data, Vector2 position) {
 	entity* player = entity_create(position, PLAYER_MAX_SPEED);
 
-	component* animated_spritesheet = create_animated_spritesheet(0.2f, (Vector2){2, 1}, (Vector2){-1, 0}, false, LoadTexture("assets/knight.png"));
+	component* animated_spritesheet = create_animated_spritesheet(0.2f, (Vector2){2, 1}, (Vector2){0, -2}, false, LoadTexture("assets/knight.png"));
 	animated_spritesheet->animated_spritesheet.enabled = true;
-	entity_add_component(player,animated_spritesheet);
+	entity_add_component(player, animated_spritesheet);
+
+	entity_add_component(player, collider_create(s, (Vector2){4, 4}, 6, LAYER_PLAYER, 0, NULL));
 
 	entity_add_component(player, player_move_create(player));
 
@@ -22,7 +24,7 @@ entity* player_create(scene* s, game_data* data, Vector2 position) {
 	entity_add_component(player, tugger);
 	data->tugger = tugger;
 
-	entity_add_component(player, player_attack_create());
+	entity_add_component(player, player_attack_create(player));
 
 	return player;
 }

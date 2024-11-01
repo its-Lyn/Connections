@@ -5,8 +5,8 @@
 
 typedef struct {
 	struct entity* locked;
-	float speed;
+	float accel;
 } constant_mover_data;
 
-struct component* constant_mover_create(float speed, struct entity* locked);
+struct component* constant_mover_create(float accel, struct entity* locked);
 

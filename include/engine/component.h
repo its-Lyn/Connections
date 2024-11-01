@@ -20,6 +20,7 @@ typedef enum {
 	TYPE_PLAYER_ATTACK,
 	TYPE_DESTROY_OFFSCREEN,
 	TYPE_ENEMY_HEALTH,
+	TYPE_SPEED_DIMINISH,
 } component_type;
 
 #include "engine/entity.h"
@@ -42,6 +43,7 @@ typedef enum {
 #include "game/components/player_attack.h"
 #include "game/components/destroy_offscreen.h"
 #include "game/components/enemy_health.h"
+#include "game/components/speed_diminish.h"
 
 typedef struct component {
 	struct entity* owner;
@@ -66,8 +68,10 @@ typedef struct component {
 		bullet_mover_data bullet_mover;
 		mover_sprite_flip_data mover_sprite_flip;
 		animated_spritesheet_data animated_spritesheet;
+		player_attack_data player_attack;
 		destroy_offscreen_data destroy_offscreen;
 		enemy_health_data enemy_health;
+		speed_diminish_data speed_diminish;
 	};
 } component;
 

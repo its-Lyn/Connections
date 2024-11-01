@@ -10,20 +10,24 @@
 #include "game/game_data.h"
 #include "game/layers.h"
 #include "game/colors.h"
+#include "game/entities/player.h"
 
 void on_lifetime_timeout(component* timer, game_data* data) {
 	scene_queue_remove(data->main_scene, timer->owner);
 }
 
-entity* slash_create(game_data* data, Vector2 position) {
-	entity* e = entity_create(position, 80.0f);
+entity* slash_create(game_data* data, Vector2 position, Vector2 dir) {
+	entity* e = entity_create(position, SLASH_START_SPEED);
 
-	entity_add_component(e, sprite_create("assets/slash.png", (Vector2){-7, -9}, WHITE, false));
-	entity_add_component(e, collider_create(data->main_scene, (Vector2){0, 0}, 7, LAYER_SLASH, 0, NULL));
-	entity_add_component(e, timer_engine_create(0.3f, true, true, on_lifetime_timeout));
+	float rot = -Vector2Angle(dir, (Vector2){0, -1}) * RAD2DEG; // WHY TF IS DRAWTEXTUREPRO ANGLE IN DEGREES AND BACKWARDS
 
-	Vector2 dir = Vector2Normalize(Vector2Subtract(data->virt_mouse, position));
+	entity_add_component(e, sprite_create("assets/slash.png", (Vector2){0, 0}, WHITE, false, rot, (Vector2){12, 12}));
+	entity_add_component(e, collider_create(data->main_scene, (Vector2){0, 0}, 12, LAYER_SLASH, 0, NULL));
+	entity_add_component(e, timer_engine_create(SLASH_LIFETIME, true, true, on_lifetime_timeout));
+
 	entity_add_component(e, bullet_mover_create(dir));
+
+	entity_add_component(e, speed_diminish_create(SLASH_DEACCEL));
 
 	return e;
 }

@@ -8,7 +8,7 @@
 #include "game/entities/player.h"
 
 void update(component* c, game_data* data) {
-	if (c->tugger.cooldown->timer.enabled || !IsKeyPressed(KEY_SPACE)) return;
+	if (c->tugger.cooldown->timer.enabled || (!IsKeyPressed(KEY_SPACE) && !IsKeyPressed(KEY_Z))) return;
 	// pressed tug button and isnt on cooldown
 
 	// applying force to princess

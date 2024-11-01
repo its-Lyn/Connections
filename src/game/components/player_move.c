@@ -20,7 +20,7 @@ static void update(component* c, game_data* data) {
 	animated_spritesheet_set_enabled(c->player_move.sprite, !Vector2Equals(dir, Vector2Zero()));
 
 	// update sprite direction
-	c->player_move.sprite->animated_spritesheet.fliph = (dir.x > 0.0f) || ((dir.x == 0.0f) & (c->player_move.sprite->animated_spritesheet.fliph));
+	c->player_move.sprite->animated_spritesheet.fliph = (dir.x > 0.0f) || ((dir.x == 0.0f) && (c->player_move.sprite->animated_spritesheet.fliph));
 
 	Vector2 goal_vel = Vector2Scale(dir, c->owner->speed);
 

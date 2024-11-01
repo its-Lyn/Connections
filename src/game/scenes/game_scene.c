@@ -26,7 +26,9 @@
 #define SPAWN_TIME_MIN 2.5f
 #define SPAWN_TIME_MAX 3.0f
 
-static void quit_pressed(component* c, game_data* data) {}
+static void quit_pressed(component* c, game_data* data) {
+	data->end = true;
+}
 
 static void resume_pressed(component* c, game_data* data) {
 	data->is_paused = !data->is_paused;

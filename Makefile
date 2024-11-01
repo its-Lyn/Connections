@@ -7,7 +7,7 @@ DEBUG=-fsanitize=address,undefined -g3
 LIBS=-lraylib -lm
 
 OPTIONS=-Wall -Wextra -Werror -Wno-unused-parameter
-OPTIONS_WEB=-I$(RAYLIB_SRC) -L$(RAYLIB_SRC) -sUSE_GLFW=3 -sGL_ENABLE_GET_PROC_ADDRESS -DPLATFORM_WEB --preload-file assets
+OPTIONS_WEB=-I$(RAYLIB_SRC) -L$(RAYLIB_SRC) -sUSE_GLFW=3 -sGL_ENABLE_GET_PROC_ADDRESS -sALLOW_MEMORY_GROWTH -DPLATFORM_WEB --preload-file assets
 
 SOURCES := $(shell find src -name '*.c')
 

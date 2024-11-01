@@ -10,6 +10,7 @@
 
 #define BAT_HEALTH 1
 #define BAT_KNOCKBACK 175.0f
+#define BAT_PLAYER_KNOCKBACK 125.0f
 
 #define BAT_IFRAMES 0.35f
 

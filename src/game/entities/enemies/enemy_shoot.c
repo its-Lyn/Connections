@@ -12,6 +12,13 @@
 
 #include "game/components/enemy_health.h"
 static void on_collision(scene* s, component* self, component* other, game_data* data) {
+	if (other->collider.layer == LAYER_PLAYER) {
+		// colliding with the player will push the enemy
+		Vector2 dir = Vector2Normalize(Vector2Subtract(self->owner->pos, other->owner->pos));
+		self->owner->vel = Vector2Scale(dir, SKULLBAT_PLAYER_KNOCKBACK);
+		return;
+	}
+
 	component* timer = entity_get_component(self->owner, TYPE_TIMER);
 	if (timer->timer.enabled) return;
 
@@ -39,7 +46,7 @@ entity* enemy_shoot_create(scene* s, Vector2 position, entity* princess) {
 
 	entity_add_component(enemy_shoot, bullet_handler_create(BULLET_TIME, s, princess));
 
-	entity_add_component(enemy_shoot, collider_create(s, (Vector2){5, 4}, 3, LAYER_ENEMIES, LAYER_SLASH, on_collision));
+	entity_add_component(enemy_shoot, collider_create(s, (Vector2){5, 4}, 3, LAYER_ENEMIES, LAYER_SLASH | LAYER_PLAYER, on_collision));
 
 	entity_add_component(enemy_shoot, timer_engine_create(SKULLBAT_IFRAMES, false, true, NULL));
 

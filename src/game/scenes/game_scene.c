@@ -14,6 +14,9 @@
 #include "game/entities/enemies/enemy_normal.h"
 #include "game/entities/enemies/enemy_shoot.h"
 
+#include "game/scenes/main_menu.h"
+
+#include "game/components/text_button.h"
 #include "game/components/timer.h"
 
 #include "game/layers.h"
@@ -22,6 +25,18 @@
 
 #define SPAWN_TIME_MIN 2.5f
 #define SPAWN_TIME_MAX 3.0f
+
+static void quit_pressed(component* c, game_data* data) {}
+
+static void resume_pressed(component* c, game_data* data) {
+	data->is_paused = !data->is_paused;
+}
+
+static void main_menu_pressed(component* c, game_data* data) {
+	data->is_paused = false;
+	data->can_pause = false;
+	scene_change(data->main_scene, main_menu_create(data));
+}
 
 Vector2 get_opposite_position(int side, game_data* data) {
 	Vector2 pos;
@@ -161,6 +176,13 @@ void game_render(scene* game_scene, game_data* data) {
 
 	// Border
 	DrawRectangleLines(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, COLOR_BROWN);
+
+	if (data->is_paused) {
+		DrawRectangleV(Vector2Zero(), data->game_size, COLOR_BROWN);
+
+		Vector2 pause_measure = MeasureTextEx(GetFontDefault(), "Paused", 20, 1);
+		DrawText("Paused", ((data->game_size.x - pause_measure.x) - 4) / 2, 10, 20, COLOR_BEIGE);
+	}
 }
 
 scene* game_scene_create(game_data* data) {
@@ -181,6 +203,20 @@ scene* game_scene_create(game_data* data) {
 	entity* enemy_spawner = enemy_spawner_create();
 	entity_add_component(enemy_spawner, data->enemy_spawn_timer);
 	scene_add_entity(s, enemy_spawner);
+
+	entity* ui_layer = enemy_spawner_create();
+	ui_layer->handle_while_paused = true;
+
+	Font font = GetFontDefault();
+	Vector2 desktop_measure = MeasureTextEx(font, "Quit To Desktop", 10, 1);
+	Vector2 main_menu_measure = MeasureTextEx(font, "Main Menu", 10, 1);
+	Vector2 resume_measure = MeasureTextEx(font, "Resume", 10, 1);
+
+	entity_add_component(ui_layer, text_button_create("Resume", (Vector2){ (data->game_size.x - resume_measure.x) / 2, 60 }, resume_pressed));
+	entity_add_component(ui_layer, text_button_create("Main Menu", (Vector2){ (data->game_size.x - main_menu_measure.x) / 2, 71 }, main_menu_pressed));
+	entity_add_component(ui_layer, text_button_create("Quit To Desktop", (Vector2){ (data->game_size.x - desktop_measure.x) / 2, 81 }, quit_pressed));
+
+	scene_add_entity(s, ui_layer);
 
 	return s;
 }

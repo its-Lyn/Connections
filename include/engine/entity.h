@@ -18,6 +18,7 @@ typedef struct entity {
 	linked_list* components;
 
 	bool queued_for_delete;
+	bool handle_while_paused;
 } entity;
 
 entity* entity_create(Vector2 position, float speed);

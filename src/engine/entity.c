@@ -19,6 +19,7 @@ entity* entity_create(Vector2 position, float speed) {
 	new_entity->speed = speed;
 	new_entity->components = NULL;
 	new_entity->queued_for_delete = false;
+	new_entity->handle_while_paused = false;
 
 	return new_entity;
 }

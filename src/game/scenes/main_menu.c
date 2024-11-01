@@ -12,14 +12,14 @@
 
 #include "game/entities/enemies/enemy_spawner.h"
 
-#include "stdio.h"
-void on_play_clicked(component* c, game_data* data) {
+static void on_play_clicked(component* c, game_data* data) {
+	data->can_pause = true;
 	scene_change(data->main_scene, game_scene_create(data));
 }
 
-void main_menu_update(scene* s, game_data* data) {}
+static void main_menu_update(scene* s, game_data* data) {}
 
-void main_menu_draw(scene* s, game_data* data) {
+static void main_menu_draw(scene* s, game_data* data) {
 	ClearBackground(COLOR_BLUE);
 }
 

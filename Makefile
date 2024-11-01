@@ -1,4 +1,5 @@
 CC=clang
+CC_COMPAT=x86_64-w64-mingw32-gcc
 EMCC=emcc
 
 INCLUDE=-Iinclude
@@ -57,6 +58,18 @@ else
 	@echo Invalid platform!
 endif
 
+
+# This is for nerds
+release-windows:
+	# deleting output directory if it already exists
+	if test -d $(OUT_RELEASE); then\
+		rm -r $(OUT_RELEASE);\
+	fi
+
+	mkdir -p $(OUT_RELEASE)/windows
+	cp -r assets $(OUT_RELEASE)/windows/assets
+
+	$(CC_COMPAT) $(OPTIONS) -I$(RAYLIB_SRC) -L$(RAYLIB_SRC) $(SOURCES) $(LIBS) -lgdi32 -lwinmm $(INCLUDE) -o $(OUT_RELEASE)/windows/$(BINARY)
 
 clean:
 	rm -rf out

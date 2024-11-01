@@ -5,10 +5,24 @@
 #include <stdlib.h>
 void scene_update_entities(scene* s, game_data* data)
 {
+	// Idk where else to handle this lmao
+	if (data->can_pause && (IsKeyPressed(KEY_ESCAPE) || IsKeyPressed(KEY_P))) {
+		data->is_paused = !data->is_paused;
+	}
+
+	if (data->is_paused) {
+		for (linked_list* elem = s->entities; elem != NULL; elem = elem->next) {
+			entity* e = elem->data;
+			if (e->handle_while_paused) entity_update(e, data);
+		}
+
+		return;
+	}
+
 	// updating scene entities
 	for (linked_list* elem = s->entities; elem != NULL; elem = elem->next) {
 		entity* e = elem->data;
-		entity_update(e, data);
+		if (!e->handle_while_paused) entity_update(e, data);
 	}
 
 	// doing the scene update itself
@@ -44,11 +58,18 @@ void scene_draw_entities(scene* s, game_data* data)
 	// drawing scene entities
 	for (linked_list* elem = s->entities; elem != NULL; elem = elem->next) {
 		entity* e = elem->data;
-		entity_draw(e, data);
+		if (!e->handle_while_paused) entity_draw(e, data);
 	}
 
 	// doing the scene drawing itself
 	if (s->render != NULL)
 		s->render(s, data);
+
+	if (data->is_paused) {
+		for (linked_list* elem = s->entities; elem != NULL; elem = elem->next) {
+			entity* e = elem->data;
+			if (e->handle_while_paused) entity_draw(e, data);
+		}
+	}
 }
 

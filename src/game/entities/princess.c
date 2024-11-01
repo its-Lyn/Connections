@@ -10,6 +10,8 @@
 #include "game/scenes/game_scene.h"
 #include "game/colors.h"
 
+#include "game/scenes/end_screen.h"
+
 void on_panic_time_out(component* _timer, game_data* data) {
 	// setting state to agitated to move around
 	data->princess_state = STATE_AGITATED;
@@ -28,8 +30,9 @@ void on_collided(scene* s, component* self, component* other, game_data* data) {
 		// damage
 		data->princess_lives--;
 		if (data->princess_lives <= 0) {
-			// restarting game
-			scene_change(data->main_scene, game_scene_create(data));
+			// NYAhhhah
+			data->can_pause = false;
+			scene_change(data->main_scene, end_screen_create(data));
 			return;
 		}
 

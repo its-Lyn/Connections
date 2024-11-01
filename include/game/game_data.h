@@ -40,4 +40,5 @@ typedef struct game_data {
 	Vector2 virt_mouse;
 
 	bool is_paused;
+	bool can_pause;
 } game_data;

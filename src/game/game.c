@@ -36,6 +36,7 @@ void init(game_data* data) {
 	data->bg_texture = LoadTexture("assets/bg.png");
 
 	data->is_paused = false;
+	data->can_pause = false;
 }
 
 void process(game_data* data) {

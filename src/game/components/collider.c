@@ -10,7 +10,7 @@
 #include "game/components/collider.h"
 #include "game/colors.h"
 
-//#define COLLIDER_DEBUG
+#define COLLIDER_DEBUG
 
 void collider_update(component* c, game_data* data) {}
 

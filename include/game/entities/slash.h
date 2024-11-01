@@ -3,7 +3,8 @@
 #include <raylib.h>
 
 #include "engine/entity.h"
-#include "engine/scenes/scene.h"
 
-struct entity* slash_create(scene* s, Vector2 position);
+#include "game/game_data.h"
+
+struct entity* slash_create(game_data* data, Vector2 position);
 

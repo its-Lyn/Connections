@@ -14,7 +14,7 @@
 
 # Balancing & Polish (Finishing Steps)
 ## Gameplay
-- [ ] Speed up enemy spawn over time
+- [x] Speed up enemy spawn over time
 - [ ] Continue balancing combat
 
 ## UI & Screens
@@ -22,7 +22,7 @@
 - [x] Menu screen
 - [x] Death screen
 - [ ] Options screen (?)
-- [ ] Way to show current "difficulty" (enemy spawn speed)
+- [ ] Way to show current wave
 
 ## Visual Feedback
 - [x] Way to see wether attack is on cooldown

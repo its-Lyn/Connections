@@ -29,13 +29,6 @@ void scene_update_entities(scene* s, game_data* data)
 	if (s->process != NULL)
 		s->process(s, data);
 
-	// if scene changed, update main scene and delete current scene
-	if (s->goto_scene != NULL) {
-		data->main_scene = s->goto_scene;
-		scene_destroy(s, data);
-		return;
-	}
-
 	// Remove all the entities in queue
 	linked_list* elem = s->delete_queue;
 	while (elem != NULL) {
@@ -48,6 +41,13 @@ void scene_update_entities(scene* s, game_data* data)
 		elem = next_elem;
 	}
 	s->delete_queue = NULL;
+
+	// if scene changed, update main scene and delete current scene
+	if (s->goto_scene != NULL) {
+		data->main_scene = s->goto_scene;
+		scene_destroy(s, data);
+		return;
+	}
 }
 
 void scene_draw_entities(scene* s, game_data* data)

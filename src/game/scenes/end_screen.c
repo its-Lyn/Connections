@@ -42,7 +42,7 @@ void end_screen_draw(scene* s, game_data* data) {}
 scene* end_screen_create(game_data* data) {
 	scene* s = scene_create(end_screen_process, end_screen_draw, end_screen_preprocess);
 
-	entity* ui_layer = enemy_spawner_create();
+	entity* ui_layer = entity_create((Vector2){0, 0}, 0.0f);
 
 	Font font = GetFontDefault();
 	entity_add_component(ui_layer, label_create("Better luck next time..", font, (Vector2){1, 1}, 10, COLOR_RED));

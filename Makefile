@@ -3,7 +3,7 @@ CC_COMPAT=x86_64-w64-mingw32-gcc
 EMCC=emcc
 
 INCLUDE=-Iinclude
-DEBUG=-fsanitize=address,undefined -g3
+DEBUG=-DDEBUG_ENABLED -fsanitize=address,undefined -g3
 LIBS=-lraylib -lm
 
 OPTIONS=-Wall -Wextra -Werror -Wno-unused-parameter

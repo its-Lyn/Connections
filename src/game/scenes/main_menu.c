@@ -33,7 +33,7 @@ scene* main_menu_create(game_data* data) {
 	scene* s = scene_create(main_menu_update, main_menu_draw, NULL);
 
 	// KEKW
-	entity* ui_layer = enemy_spawner_create();
+	entity* ui_layer = entity_create((Vector2){0, 0}, 0.0f);
 	scene_add_entity(s, ui_layer);
 
 	// Ok fine I won't eyeball it

@@ -10,12 +10,10 @@
 #include "game/components/collider.h"
 #include "game/colors.h"
 
-//#define COLLIDER_DEBUG
-
 void collider_update(component* c, game_data* data) {}
 
 void collider_draw(component* c, game_data* data) {
-#ifdef COLLIDER_DEBUG
+#ifdef DEBUG_ENABLED
 	DrawCircleLines(c->owner->pos.x + c->collider.offset.x, c->owner->pos.y + c->collider.offset.y, c->collider.radius, COLOR_RED);
 #endif
 }

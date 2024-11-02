@@ -7,6 +7,7 @@
 #include "game/entities/enemies/enemy_spawner.h"
 #include "game/entities/enemies/enemy_normal.h"
 #include "game/entities/enemies/enemy_shoot.h"
+#include "game/components/wave_manager.h"
 
 Vector2 get_position(int side, game_data* data) {
 	Vector2 pos;
@@ -64,32 +65,36 @@ Vector2 get_opposite_position(int side, game_data* data) {
 	return pos;
 }
 
-void spawn_random_enemy(Vector2 pos, game_data* data) {
+void spawn_random_enemy(wave_data wave, Vector2 pos, game_data* data) {
 	entity* enemy;
 
-	// 1/4 chance to spawn a shooter
-	if (rand_int(0, 4) == 1) enemy = enemy_shoot_create(data->main_scene, pos, data->princess);
+	// Chance to spawn a shooter
+	if (rand_float(0, 1) <= wave.shooter_chance) enemy = enemy_shoot_create(data->main_scene, pos, data->princess);
 	else enemy = enemy_normal_create(data->main_scene, pos, data->princess);
 
 	scene_add_entity(data->main_scene, enemy);
 }
 
 void on_enemy_spawn_time_out(component* c, game_data* data) {
+	wave_manager_data wm = entity_get_component(c->owner, TYPE_WAVE_MANAGER)->wave_manager;
+	wave_data wave = wm.waves[wm.curr_wave];
+
 	int side = rand_int(0, 3);
 
-	// 1/5 chance to spawn enemy on opposite side of screen.
-	if (rand_int(0, 5) == 1)
-		spawn_random_enemy(get_opposite_position(side, data), data);
+	// Chance to spawn a second enemy on the opposite side of screen.
+	if (rand_float(0, 1) <= wave.double_chance)
+		spawn_random_enemy(wave, get_opposite_position(side, data), data);
 
-	spawn_random_enemy(get_position(side, data), data);
+	spawn_random_enemy(wave, get_position(side, data), data);
 
 	// Pick new spawn time.
-	c->timer.timeout = rand_float(ENEMY_SPAWN_TIME_MIN, ENEMY_SPAWN_TIME_MAX);
+	c->timer.timeout = wave.spawn_time;
 }
 
 entity* enemy_spawner_create() {
 	entity* e = entity_create((Vector2){0, 0}, 0);
 
+	entity_add_component(e, wave_manager_create(e));
 	entity_add_component(e, timer_engine_create(ENEMY_SPAWN_TIME_INITIAL, true, false, on_enemy_spawn_time_out));
 
 	return e;

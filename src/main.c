@@ -43,6 +43,9 @@ void loop(void *game) {
 
 int main() {
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+#ifndef DEBUG_ENABLED
+	SetTraceLogLevel(LOG_WARNING);
+#endif
 	InitWindow(128 * 5, 128 * 5, "Connections");
 
 	// Do not quit when EXIT is pressed.

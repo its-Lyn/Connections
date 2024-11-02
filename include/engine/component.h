@@ -22,7 +22,8 @@ typedef enum {
 	TYPE_ENEMY_HEALTH,
 	TYPE_SPEED_DIMINISH,
 	TYPE_TEXT_BUTTON,
-	TYPE_LINE
+	TYPE_LINE,
+	TYPE_WAVE_MANAGER,
 } component_type;
 
 #include "engine/entity.h"
@@ -48,6 +49,7 @@ typedef enum {
 #include "game/components/speed_diminish.h"
 #include "game/components/text_button.h"
 #include "game/components/line.h"
+#include "game/components/wave_manager.h"
 
 typedef struct component {
 	struct entity* owner;
@@ -78,6 +80,7 @@ typedef struct component {
 		speed_diminish_data speed_diminish;
 		text_button_data text_button;
 		line_data line;
+		wave_manager_data wave_manager;
 	};
 } component;
 

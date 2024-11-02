@@ -6,4 +6,6 @@
 #define ENEMY_SPAWN_TIME_MIN 2.5f
 #define ENEMY_SPAWN_TIME_MAX 3.0f
 
+#define ENEMY_SPAWN_WAVE_COUNT 5
+
 struct entity* enemy_spawner_create();

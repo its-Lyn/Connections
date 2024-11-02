@@ -31,8 +31,6 @@ void init(game_data* data) {
 
 	data->main_scene = main_menu_create(data);
 
-	data->enemy_spawn_time = 2.0f;
-
 	data->bg_texture = LoadTexture("assets/bg.png");
 
 	data->is_paused = false;

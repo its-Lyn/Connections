@@ -25,9 +25,6 @@ typedef struct game_data {
 
 	struct component* tugger;
 
-	struct component* enemy_spawn_timer;
-	float enemy_spawn_time;
-
 	struct entity* player;
 
 	Texture2D bg_texture;

@@ -60,37 +60,44 @@ void game_pre_render(scene* game_scene, game_data* data) {
 	DrawTexture(data->bg_texture, 0, 0, WHITE);
 }
 
-#define OFFSET 3
-#define GAP 1
+#define HEALTH_OFFSET 3
+#define HEALTH_GAP 1
 #define HEALTH_SIZE 5
 
-#define OFFSET_X 3
-#define OFFSET_Y (4 + OFFSET_X * 2)
-#define WIDTH 17
-#define HEIGHT 5
+#define TUGBAR_OFFSET_X 3
+#define TUGBAR_OFFSET_Y (4 + TUGBAR_OFFSET_X * 2)
+#define TUGBAR_WIDTH 17
+#define TUGBAR_HEIGHT 5
+
+#define WAVEBAR_OFFSET_X 1
+#define WAVEBAR_OFFSET_Y 1
 
 void game_render(scene* game_scene, game_data* data) {
 	// Health
-	int base_x = OFFSET;
+	int base_x = HEALTH_OFFSET;
 	for (int i = 0; i < data->princess_lives; i++) {
-		DrawRectangle(base_x, OFFSET, HEALTH_SIZE, HEALTH_SIZE, COLOR_PINK);
-		DrawRectangleLines(base_x, OFFSET, HEALTH_SIZE, HEALTH_SIZE, COLOR_DARK_RED);
-		base_x += HEALTH_SIZE + GAP;
+		DrawRectangle(base_x, HEALTH_OFFSET, HEALTH_SIZE, HEALTH_SIZE, COLOR_PINK);
+		DrawRectangleLines(base_x, HEALTH_OFFSET, HEALTH_SIZE, HEALTH_SIZE, COLOR_DARK_RED);
+		base_x += HEALTH_SIZE + HEALTH_GAP;
 	}
 
 	// tug cooldown bar
 	  // - Empty background
-	DrawRectangle(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, COLOR_DARK_RED);
+	DrawRectangle(TUGBAR_OFFSET_X, TUGBAR_OFFSET_Y, TUGBAR_WIDTH, TUGBAR_HEIGHT, COLOR_DARK_RED);
 
 	float elapsed = data->tugger->tugger.cooldown->timer.timer;
-	float filled_width = (elapsed / PLAYER_TUG_COOLDOWN) * WIDTH;
+	float filled_width = (elapsed / PLAYER_TUG_COOLDOWN) * TUGBAR_WIDTH;
 
 	  // - Filled background
-	if (data->tugger->tugger.cooldown->timer.enabled) DrawRectangle(OFFSET_X, OFFSET_Y, filled_width, HEIGHT, COLOR_RED);
-	else DrawRectangle(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, COLOR_PINK);
+	if (data->tugger->tugger.cooldown->timer.enabled) DrawRectangle(TUGBAR_OFFSET_X, TUGBAR_OFFSET_Y, filled_width, TUGBAR_HEIGHT, COLOR_RED);
+	else DrawRectangle(TUGBAR_OFFSET_X, TUGBAR_OFFSET_Y, TUGBAR_WIDTH, TUGBAR_HEIGHT, COLOR_PINK);
 
 	  // - Border
-	DrawRectangleLines(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT, COLOR_BROWN);
+	DrawRectangleLines(TUGBAR_OFFSET_X, TUGBAR_OFFSET_Y, TUGBAR_WIDTH, TUGBAR_HEIGHT, COLOR_BROWN);
+
+	// wave bar
+	Vector2 pos = (Vector2){(int)((data->game_size.x - data->waves_texture.width)/2 + WAVEBAR_OFFSET_X), WAVEBAR_OFFSET_Y};
+	DrawTextureRec(data->waves_texture, (Rectangle){0, data->waves_frame_h * data->waves->wave_manager.curr_wave, data->waves_texture.width, data->waves_frame_h}, pos, WHITE);
 
 	// pause screen
 	if (data->is_paused) {
@@ -114,7 +121,7 @@ scene* game_scene_create(game_data* data) {
 	scene_add_entity(s, data->princess);
 
 	// Add enemy spawner.
-	scene_add_entity(s, enemy_spawner_create());
+	scene_add_entity(s, enemy_spawner_create(data));
 
 	// add UI layer
 	entity* ui_layer = entity_create((Vector2){0, 0}, 0.0f);

@@ -7,7 +7,7 @@
 #include "game/entities/enemies/enemy_spawner.h"
 
 static void on_wave_change(component* timer, game_data* data) {
-	component* c = entity_get_component(timer->owner, TYPE_WAVE_MANAGER);
+	component* c = data->waves;
 
 	// increment wave
 	if (++c->wave_manager.curr_wave >= ENEMY_SPAWN_WAVE_COUNT - 1) {

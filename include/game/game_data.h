@@ -29,6 +29,10 @@ typedef struct game_data {
 
 	Texture2D bg_texture;
 
+	struct component* waves;
+	Texture2D waves_texture;
+	int waves_frame_h;
+
 	RenderTexture2D renderer;
 
 	Vector2 game_size;

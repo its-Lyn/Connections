@@ -76,7 +76,7 @@ void spawn_random_enemy(wave_data wave, Vector2 pos, game_data* data) {
 }
 
 void on_enemy_spawn_time_out(component* c, game_data* data) {
-	wave_manager_data wm = entity_get_component(c->owner, TYPE_WAVE_MANAGER)->wave_manager;
+	wave_manager_data wm = data->waves->wave_manager;
 	wave_data wave = wm.waves[wm.curr_wave];
 
 	int side = rand_int(0, 3);
@@ -91,10 +91,11 @@ void on_enemy_spawn_time_out(component* c, game_data* data) {
 	c->timer.timeout = wave.spawn_time;
 }
 
-entity* enemy_spawner_create() {
+entity* enemy_spawner_create(game_data* data) {
 	entity* e = entity_create((Vector2){0, 0}, 0);
 
-	entity_add_component(e, wave_manager_create(e));
+	data->waves = wave_manager_create(e);
+	entity_add_component(e, data->waves);
 	entity_add_component(e, timer_engine_create(ENEMY_SPAWN_TIME_INITIAL, true, false, on_enemy_spawn_time_out));
 
 	return e;

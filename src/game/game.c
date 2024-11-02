@@ -15,6 +15,7 @@
 #include "game/scenes/game_scene.h"
 #include "game/scenes/main_menu.h"
 #include "game/components/label.h"
+#include "game/entities/enemies/enemy_spawner.h"
 
 void init(game_data* data) {
 	// initializing all to 0 to make sure no values are left uninitialized
@@ -32,6 +33,8 @@ void init(game_data* data) {
 	data->main_scene = main_menu_create(data);
 
 	data->bg_texture = LoadTexture("assets/bg.png");
+	data->waves_texture = LoadTexture("assets/waves.png");
+	data->waves_frame_h = data->waves_texture.height / ENEMY_SPAWN_WAVE_COUNT;
 
 	data->is_paused = false;
 	data->can_pause = false;
@@ -96,8 +99,9 @@ void kill(game_data* data) {
 	// Unload the game window renderer
 	UnloadRenderTexture(data->renderer);
 
-	// Unload background texture
+	// Unload textures
 	UnloadTexture(data->bg_texture);
+	UnloadTexture(data->waves_texture);
 
 	scene_destroy(data->main_scene, data);
 	free(data);

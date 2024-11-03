@@ -50,6 +50,20 @@ void init(game_data* data) {
 	data->can_pause = false;
 
 	data->end = false;
+
+	Camera2D game_camera = { 0 };
+	game_camera.target = Vector2Zero();
+	game_camera.offset = Vector2Zero();
+
+	game_camera.rotation = 0;
+	game_camera.zoom = 1.0f;
+
+	data->game_camera = game_camera;
+	data->shaking = false;
+	data->magnitude = 1.0f;
+	data->intensity = 0;
+	data->shake_offset = Vector2Zero();
+	data->duration = 0.3f;
 }
 
 void process(game_data* data) {
@@ -70,16 +84,19 @@ void process(game_data* data) {
 	scene_update_entities(data->main_scene, data);
 }
 
+#include "game/colors.h"
 void render(game_data* data) {
 	// This is where we draw inside the game world
 	BeginTextureMode(data->renderer);
-		ClearBackground(RAYWHITE);
-		scene_draw_entities(data->main_scene, data);
+		ClearBackground(COLOR_GREEN);
+		BeginMode2D(data->game_camera);
+			scene_draw_entities(data->main_scene, data);
+		EndMode2D();
 	EndTextureMode();
 
 	// This is where we draw inside the screen world
 	BeginDrawing();
-		ClearBackground(BLACK);
+		ClearBackground(COLOR_BROWN);
 
 		// Draw the render texture.
 		// PARAMS

@@ -57,5 +57,12 @@ typedef struct game_data {
 	bool is_paused;
 	bool can_pause;
 
+	Camera2D game_camera;
+	Vector2 shake_offset;
+	bool shaking;
+	float duration;
+	float intensity;
+	float magnitude;
+
 	bool end;
 } game_data;

@@ -21,6 +21,8 @@
 
 #include "game/colors.h"
 
+#include "engine/utilities/rand.h"
+
 static void quit_pressed(component* c, game_data* data) {
 	data->end = true;
 }
@@ -39,6 +41,21 @@ static void main_menu_pressed(component* c, game_data* data) {
 
 static void on_score_timer_timeout(component* timer, game_data* data) {
 	data->score += 10;
+}
+
+void shake(game_data* data) {
+	if (!data->shaking) return;
+
+	data->intensity -= GetFrameTime() / data->duration;
+	if (data->intensity <= 0) {
+		data->shaking = false;
+		data->shake_offset = Vector2Zero();
+
+		return;
+	}
+
+	float rot = rand_float(0, 2*PI);
+	data->shake_offset = Vector2Scale((Vector2){ cosf(rot), sinf(rot) }, data->magnitude * data->intensity);
 }
 
 void game_process(scene *game_scene, game_data *data) {
@@ -61,6 +78,9 @@ void game_process(scene *game_scene, game_data *data) {
 			}
 		}
 	}
+
+	data->game_camera.offset = data->shake_offset;
+	if (data->shaking) shake(data);
 }
 
 void game_pre_render(scene* game_scene, game_data* data) {

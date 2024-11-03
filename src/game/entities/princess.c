@@ -36,6 +36,12 @@ void on_collided(scene* s, component* self, component* other, game_data* data) {
 			return;
 		}
 
+		// Shake
+		data->shaking = true;
+
+		data->duration = 0.3f;
+		data->intensity = 1.0f;
+
 		// iframes
 		data->princess_iframe->timer.timer = 0;
 		data->princess_iframe->timer.enabled = true;

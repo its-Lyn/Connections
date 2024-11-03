@@ -15,12 +15,22 @@ static void update(component* c, game_data* data) {
 	if (c->player_attack.cooldown->timer.enabled) return;
 
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		data->shaking = true;
+
+		data->duration = 0.06f;
+		data->intensity = 1.0f;
+
 		Vector2 pos = Vector2Add(data->player->pos, (Vector2){PLAYER_WIDTH/2, PLAYER_HEIGHT/2});
 		scene_add_entity(data->main_scene, slash_create(data, pos, Vector2Normalize(Vector2Subtract(data->virt_mouse, pos))));
 
 		c->player_attack.cooldown->timer.enabled = true;
 		c->player_attack.cooldown->timer.timer = 0;
 	} else if (IsKeyPressed(KEY_X) || IsKeyPressed(KEY_LEFT_SHIFT) || IsKeyPressed(KEY_RIGHT_SHIFT)) {
+		data->shaking = true;
+
+		data->duration = 0.06;
+		data->intensity = 1.0f;
+
 		Vector2 pos = Vector2Add(data->player->pos, (Vector2){PLAYER_WIDTH/2, PLAYER_HEIGHT/2});
 
 		// get input dir

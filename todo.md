@@ -21,14 +21,13 @@
 - [x] Show survival time/score
 - [x] Menu screen
 - [x] Death screen
-- [ ] Options screen (?) (no)
 - [x] Way to show current wave
 
 ## Visual Feedback
 - [x] Way to see wether attack is on cooldown
 - [x] Princess damage flash (only princess, instantly to palette beige so no extra colors)
 - [ ] Princess stunned/calm/agitated visual feedback
-- [ ] Screenshake (?) (no)
+- [x] Screenshake (?)
 
 ## Art
 - [ ] Enemy animations

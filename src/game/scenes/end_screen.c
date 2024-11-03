@@ -41,6 +41,7 @@ static void main_menu_pressed(component* c, game_data* data) {
 
 void end_screen_preprocess(scene* s, game_data* data) {
 	DrawTextureV(data->bg_texture, Vector2Zero(), WHITE);
+	DrawRectangle(0, 0, data->game_size.x, 24, COLOR_BROWN);
 }
 
 void end_screen_process(scene* s, game_data* data) {}
@@ -53,8 +54,17 @@ scene* end_screen_create(game_data* data) {
 	entity* ui_layer = entity_create((Vector2){0, 0}, 0.0f);
 
 	Font font = GetFontDefault();
-	entity_add_component(ui_layer, label_create("Better luck next time...", font, (Vector2){1, 1}, 10, COLOR_RED));
-	entity_add_component(ui_layer, label_create("Ms. Knight!", font, (Vector2){1, 11}, 10, COLOR_RED));
+
+	// loss/win message
+	if (data->waves->wave_manager.curr_wave >= 4) {
+		// reached last wave, win message
+		entity_add_component(ui_layer, label_create("Other knights arrived!", font, (Vector2){2,  2}, 10, COLOR_BEIGE));
+		entity_add_component(ui_layer, label_create("Final wave reached! WON!", font, (Vector2){2, 12}, 10, COLOR_GREEN));
+	} else {
+		// did not reach last wave, loss
+		entity_add_component(ui_layer, label_create("Princess captured...",  font, (Vector2){2,  2}, 10, COLOR_BEIGE));
+		entity_add_component(ui_layer, label_create("Final wave NOT reached.", font, (Vector2){2, 12}, 10, COLOR_RED));
+	}
 
 	Vector2 desktop_measure = MeasureTextEx(font, "Quit To Desktop", 10, 1);
 	Vector2 main_menu_measure = MeasureTextEx(font, "Main Menu", 10, 1);

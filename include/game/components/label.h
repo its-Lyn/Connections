@@ -7,7 +7,7 @@
 #include "engine/component.h"
 
 typedef struct {
-	const char* text;
+	char* text;
 	Font font;
 	int font_size;
 
@@ -15,5 +15,5 @@ typedef struct {
 	Color colour;
 } label_data;
 
-struct component* label_create(const char* text, Font font, Vector2 pos, int font_size, Color colour);
+struct component* label_create(char* text, Font font, Vector2 pos, int font_size, Color colour);
 

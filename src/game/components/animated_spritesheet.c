@@ -22,6 +22,8 @@ void animated_spritesheet_update(component* c, game_data* data) {
 }
 
 void animated_spritesheet_draw(component* c, game_data* data) {
+	if (!c->animated_spritesheet.visible) return;
+
 	c->animated_spritesheet.source.width = c->animated_spritesheet.fliph ? -c->animated_spritesheet.frame_dimensions.x : c->animated_spritesheet.frame_dimensions.x;
 
 	Vector2 pos = Vector2Add(c->owner->pos, c->animated_spritesheet.offset);
@@ -72,6 +74,8 @@ component* create_animated_spritesheet(float speed_per_frame, Vector2 frame_coun
 		spritesheet->animated_spritesheet.frame_dimensions.x,
 		spritesheet->animated_spritesheet.frame_dimensions.y
 	};
+
+	spritesheet->animated_spritesheet.visible = true;
 
 	return spritesheet;
 }

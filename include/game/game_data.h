@@ -20,6 +20,11 @@ typedef struct game_data {
 	struct component* princess_iframe;
 	struct component* princess_run_timer;
 	struct component* princess_stun_timer;
+	struct component* princess_flash_timer;
+
+	struct component* princess_normal_sprite;
+	struct component* princess_flash_sprite;
+
 	princess_state princess_state;
 	int princess_lives;
 
@@ -34,6 +39,7 @@ typedef struct game_data {
 	int waves_frame_h;
 
 	int score;
+	int high_score;
 	int drawn_score;
 	int score_measure;
 	char* score_text;

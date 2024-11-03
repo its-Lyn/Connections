@@ -15,20 +15,20 @@
 # Balancing & Polish (Finishing Steps)
 ## Gameplay
 - [x] Speed up enemy spawn over time
-- [ ] Continue balancing combat
+- [x] Continue balancing combat
 
 ## UI & Screens
-- [ ] Show survival time/score
+- [x] Show survival time/score
 - [x] Menu screen
 - [x] Death screen
-- [ ] Options screen (?)
+- [ ] Options screen (?) (no)
 - [x] Way to show current wave
 
 ## Visual Feedback
 - [x] Way to see wether attack is on cooldown
-- [ ] Princess damage flash (only princess, instantly to palette beige so no extra colors)
+- [x] Princess damage flash (only princess, instantly to palette beige so no extra colors)
 - [ ] Princess stunned/calm/agitated visual feedback
-- [ ] Screenshake (?)
+- [ ] Screenshake (?) (no)
 
 ## Art
 - [ ] Enemy animations

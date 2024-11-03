@@ -37,6 +37,7 @@ void init(game_data* data) {
 	data->waves_frame_h = data->waves_texture.height / ENEMY_SPAWN_WAVE_COUNT;
 
 	data->score = 0;
+	data->high_score = 0;
 	data->drawn_score = 0;
 	data->score_measure = MeasureText("0", 10);
 	data->score_text = malloc(sizeof(char) * 2);

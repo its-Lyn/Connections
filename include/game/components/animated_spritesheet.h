@@ -22,6 +22,7 @@ typedef struct {
 	int frame;
 
 	bool enabled;
+	bool visible;
 } animated_spritesheet_data;
 
 struct component* create_animated_spritesheet(float speed_per_frame, Vector2 frame_count, Vector2 offset, bool fliph, Texture2D texture, float rotation, Vector2 pivot);

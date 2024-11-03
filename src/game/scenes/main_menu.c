@@ -40,10 +40,10 @@ scene* main_menu_create(game_data* data) {
 	Font font = GetFontDefault();
 	Vector2 play_measure  = MeasureTextEx(font, "Play", 10, 1);
 	Vector2 quit_measure  = MeasureTextEx(font, "Quit", 10, 1);
-	Vector2 title_measure = MeasureTextEx(font, "Connections", 20, 1);
+	Vector2 title_measure = MeasureTextEx(font, "Panicky Royalty", 10, 1);
 
 	// Title
-	entity_add_component(ui_layer, label_create("Connections", font, (Vector2){(data->game_size.x - title_measure.x) / 2, 15}, 20, COLOR_BEIGE));
+	entity_add_component(ui_layer, label_create("Panicky Royalty", font, (Vector2){(data->game_size.x - title_measure.x) / 2, 15}, 10, COLOR_BEIGE));
 
 	// Credits
 	entity_add_component(ui_layer, label_create("Raylib NEXT Jam", font, (Vector2){1, 110}, 10, COLOR_GREEN));

@@ -89,6 +89,10 @@ void game_pre_render(scene* game_scene, game_data* data) {
 		DrawTexture(data->tutorial0_texture, 0, 0, WHITE);
 	} else if (data->waves->wave_manager.curr_wave == 1) {
 		DrawTexture(data->tutorial1_texture, 0, 0, WHITE);
+	} else if (data->waves->wave_manager.curr_wave == 2) {
+		DrawTexture(data->tutorial2_texture, 0, 0, WHITE);
+	} else if (data->waves->wave_manager.curr_wave == 4) {
+		DrawTexture(data->tutorial4_texture, 0, 0, WHITE);
 	} else {
 		DrawTexture(data->bg_texture, 0, 0, WHITE);
 	}

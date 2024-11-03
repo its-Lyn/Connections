@@ -45,6 +45,8 @@ void init(game_data* data) {
 
 	data->tutorial0_texture = LoadTexture("assets/bg-tutorial0.png");
 	data->tutorial1_texture = LoadTexture("assets/bg-tutorial1.png");
+	data->tutorial2_texture = LoadTexture("assets/bg-tutorial2.png");
+	data->tutorial4_texture = LoadTexture("assets/bg-tutorial4.png");
 
 	data->is_paused = false;
 	data->can_pause = false;
@@ -136,6 +138,8 @@ void kill(game_data* data) {
 	// unloading tutorial textures
 	UnloadTexture(data->tutorial0_texture);
 	UnloadTexture(data->tutorial1_texture);
+	UnloadTexture(data->tutorial2_texture);
+	UnloadTexture(data->tutorial4_texture);
 
 	scene_destroy(data->main_scene, data);
 	free(data);

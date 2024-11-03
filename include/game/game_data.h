@@ -46,6 +46,8 @@ typedef struct game_data {
 
 	Texture2D tutorial0_texture;
 	Texture2D tutorial1_texture;
+	Texture2D tutorial2_texture;
+	Texture2D tutorial4_texture;
 
 	RenderTexture2D renderer;
 

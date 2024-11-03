@@ -38,6 +38,9 @@ typedef struct game_data {
 	int score_measure;
 	char* score_text;
 
+	Texture2D tutorial0_texture;
+	Texture2D tutorial1_texture;
+
 	RenderTexture2D renderer;
 
 	Vector2 game_size;

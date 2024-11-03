@@ -42,6 +42,9 @@ void init(game_data* data) {
 	data->score_text = malloc(sizeof(char) * 2);
 	memcpy(data->score_text, "0", 2);
 
+	data->tutorial0_texture = LoadTexture("assets/bg-tutorial0.png");
+	data->tutorial1_texture = LoadTexture("assets/bg-tutorial1.png");
+
 	data->is_paused = false;
 	data->can_pause = false;
 
@@ -111,6 +114,10 @@ void kill(game_data* data) {
 
 	// freeing score text
 	free(data->score_text);
+
+	// unloading tutorial textures
+	UnloadTexture(data->tutorial0_texture);
+	UnloadTexture(data->tutorial1_texture);
 
 	scene_destroy(data->main_scene, data);
 	free(data);

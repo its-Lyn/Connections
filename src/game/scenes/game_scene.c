@@ -63,7 +63,13 @@ void game_process(scene *game_scene, game_data *data) {
 
 void game_pre_render(scene* game_scene, game_data* data) {
 	// drawing background
-	DrawTexture(data->bg_texture, 0, 0, WHITE);
+	if (data->waves->wave_manager.curr_wave == 0) {
+		DrawTexture(data->tutorial0_texture, 0, 0, WHITE);
+	} else if (data->waves->wave_manager.curr_wave == 1) {
+		DrawTexture(data->tutorial1_texture, 0, 0, WHITE);
+	} else {
+		DrawTexture(data->bg_texture, 0, 0, WHITE);
+	}
 }
 
 #define HEALTH_OFFSET 3

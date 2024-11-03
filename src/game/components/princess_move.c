@@ -45,6 +45,9 @@ void princess_move_update(component* c, game_data* data) {
 	animated_spritesheet_set_enabled(c->princess_move.sprite, !Vector2Equals(c->princess_move.dir, Vector2Zero()));
 	c->princess_move.sprite->animated_spritesheet.fliph = (c->princess_move.dir.x > 0.0f) || (c->princess_move.dir.x == 0.0f && c->princess_move.sprite->animated_spritesheet.fliph);
 
+	animated_spritesheet_set_enabled(c->princess_move.flash_sprite, !Vector2Equals(c->princess_move.dir, Vector2Zero()));
+	c->princess_move.flash_sprite->animated_spritesheet.fliph = (c->princess_move.dir.x > 0.0f) || (c->princess_move.dir.x == 0.0f && c->princess_move.flash_sprite->animated_spritesheet.fliph);
+
 	// Clamp the princess position inside the screen and bounce on the edges
 	Vector2 pos = c->owner->pos;
 	if (pos.x < 0) {
@@ -71,12 +74,13 @@ void princess_move_update(component* c, game_data* data) {
 	c->owner->vel = Vector2MoveTowards(c->owner->vel, goal_vel, PRINCESS_ACCEL * GetFrameTime());
 }
 
-component* princess_move_create(entity* princess, entity* player) {
+component* princess_move_create(entity* princess, entity* player, struct component* normal_sprite, struct component* flash_sprite) {
 	component* c = component_create(TYPE_PRINCESS_MOVE, princess_move_update, NULL, NULL);
 
 	c->princess_move.player = player;
 	c->princess_move.dir = Vector2Zero();
-	c->princess_move.sprite = entity_get_component(princess, TYPE_ANIMATED_SPRITESHEET);
+	c->princess_move.sprite = normal_sprite;
+	c->princess_move.flash_sprite = flash_sprite;
 
 	return c;
 }

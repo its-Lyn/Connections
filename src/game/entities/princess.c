@@ -63,9 +63,11 @@ entity* princess_create(game_data* data, scene* s, Vector2 position, entity* pla
 	entity* princess = entity_create(position, PRINCESS_SPEED);
 
 	// SpriteSheet Data.
-	data->princess_normal_sprite = create_animated_spritesheet(0.25f, (Vector2){2, 1}, (Vector2){-2, -4}, false, LoadTexture("assets/princess.png"), 0.0f, (Vector2){0, 0});
 	data->princess_flash_sprite  = create_animated_spritesheet(0.25f, (Vector2){2, 1}, (Vector2){-2, -4}, false, LoadTexture("assets/princess_flash.png"), 0.0f, (Vector2){0, 0});
+	data->princess_flash_sprite->animated_spritesheet.enabled = true;
 	data->princess_flash_sprite->animated_spritesheet.visible = false;
+
+	data->princess_normal_sprite = create_animated_spritesheet(0.25f, (Vector2){2, 1}, (Vector2){-2, -4}, false, LoadTexture("assets/princess.png"), 0.0f, (Vector2){0, 0});
 
 	entity_add_component(princess, data->princess_normal_sprite);
 	entity_add_component(princess, data->princess_flash_sprite);
@@ -75,7 +77,7 @@ entity* princess_create(game_data* data, scene* s, Vector2 position, entity* pla
 	entity_add_component(princess, data->princess_flash_timer);
 
 	entity_add_component(princess, connection_create(player, COLOR_BROWN, 28.0f, 8.0f));
-	entity_add_component(princess, princess_move_create(princess, player));
+	entity_add_component(princess, princess_move_create(princess, player, data->princess_normal_sprite, data->princess_flash_sprite));
 
 	component* princess_collider = collider_create(s, (Vector2) {4, 4}, 4, LAYER_PRINCESS, LAYER_ENEMIES, on_collided);
 	entity_add_component(princess, princess_collider);

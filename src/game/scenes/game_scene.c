@@ -11,6 +11,8 @@
 #include "game/entities/player.h"
 #include "game/entities/princess.h"
 
+#include "game/entities/crown_pickup.h"
+
 #include "game/entities/enemies/enemy_spawner.h"
 #include "game/scenes/main_menu.h"
 
@@ -41,6 +43,11 @@ static void main_menu_pressed(component* c, game_data* data) {
 
 static void on_score_timer_timeout(component* timer, game_data* data) {
 	data->score += 10;
+}
+
+static void on_health_timeout(component* timer, game_data* data) {
+	Vector2 pos = (Vector2){rand_float(15, data->game_size.x - 15), rand_float(7, data->game_size.y - 14)};
+	scene_add_entity(data->main_scene, crown_pickup_create(data->main_scene, pos));
 }
 
 void shake(game_data* data) {
@@ -204,6 +211,11 @@ scene* game_scene_create(game_data* data) {
 	entity* score_timer = entity_create((Vector2){0, 0}, 0.0f);
 	entity_add_component(score_timer, timer_engine_create(1.0f, true, false, on_score_timer_timeout));
 	scene_add_entity(s, score_timer);
+
+	// spawn health pickup timer
+	entity* health_timer = entity_create((Vector2){0, 0}, 0.0f);
+	entity_add_component(health_timer, timer_engine_create(20.0f, true, false, on_health_timeout));
+	scene_add_entity(s, health_timer);
 
 	return s;
 }

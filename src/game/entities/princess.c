@@ -82,7 +82,7 @@ entity* princess_create(game_data* data, scene* s, Vector2 position, entity* pla
 	data->princess_flash_timer = timer_engine_create(0.15f, false, true, on_flash_time_out);
 	entity_add_component(princess, data->princess_flash_timer);
 
-	entity_add_component(princess, connection_create(player, COLOR_BROWN, 28.0f, 8.0f));
+	entity_add_component(princess, connection_create(player, COLOR_BROWN, 24.0f, 6.0f));
 	entity_add_component(princess, princess_move_create(princess, player, data->princess_normal_sprite, data->princess_flash_sprite));
 
 	component* princess_collider = collider_create(s, (Vector2) {4, 4}, 4, LAYER_PRINCESS, LAYER_ENEMIES, on_collided);

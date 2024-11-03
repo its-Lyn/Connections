@@ -24,20 +24,20 @@ component* wave_manager_create(entity* owner) {
 
 	c->wave_manager.curr_wave = 0;
 	c->wave_manager.waves[0] = (wave_data){
-		.wave_length    = 14.0f,
+		.wave_length    = 24.0f,
 		.spawn_time     =  5.0f,
 		.double_chance  =  0.1f,
 		.shooter_chance =  0.0f,
 	};
 	c->wave_manager.waves[1] = (wave_data){
-		.wave_length    = 16.0f,
+		.wave_length    = 21.0f,
 		.spawn_time     =  3.0f,
 		.double_chance  =  0.2f,
 		.shooter_chance =  0.0f,
 	};
 	c->wave_manager.waves[2] = (wave_data){
 		.wave_length    = 30.0f,
-		.spawn_time     =  3.0f,
+		.spawn_time     =  2.5f,
 		.double_chance  =  0.3f,
 		.shooter_chance =  0.2f,
 	};
@@ -48,10 +48,10 @@ component* wave_manager_create(entity* owner) {
 		.shooter_chance =  0.3f,
 	};
 	c->wave_manager.waves[4] = (wave_data){
-		.wave_length    = 30.0f,
-		.spawn_time     =  1.0f,
-		.double_chance  =  0.5f,
-		.shooter_chance =  0.4f,
+		.wave_length    = 0.0f, // last wave is infinite
+		.spawn_time     = 1.0f,
+		.double_chance  = 0.5f,
+		.shooter_chance = 0.4f,
 	};
 
 	entity_add_component(owner, timer_engine_create(c->wave_manager.waves[0].wave_length, true, false, on_wave_change));

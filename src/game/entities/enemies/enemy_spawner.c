@@ -88,7 +88,7 @@ void on_enemy_spawn_time_out(component* c, game_data* data) {
 	spawn_random_enemy(wave, get_position(side, data), data);
 
 	// Pick new spawn time.
-	c->timer.timeout = wave.spawn_time;
+	c->timer.timeout = rand_float(wave.spawn_time, wave.spawn_time + ENEMY_SPAWN_TIME_MAX_ADD);
 }
 
 entity* enemy_spawner_create(game_data* data) {

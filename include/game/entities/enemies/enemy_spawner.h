@@ -3,9 +3,8 @@
 #include "engine/entity.h"
 #include "game/game_data.h"
 
-#define ENEMY_SPAWN_TIME_INITIAL 5.0f
-#define ENEMY_SPAWN_TIME_MIN 2.5f
-#define ENEMY_SPAWN_TIME_MAX 3.0f
+#define ENEMY_SPAWN_TIME_INITIAL 10.0f
+#define ENEMY_SPAWN_TIME_MAX_ADD 0.5f
 
 #define ENEMY_SPAWN_WAVE_COUNT 5
 

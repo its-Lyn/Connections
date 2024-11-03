@@ -18,7 +18,7 @@
 - [ ] Continue balancing combat
 
 ## UI & Screens
-- [ ] Show survival time/score
+- [x] Show survival time/score
 - [x] Menu screen
 - [x] Death screen
 - [ ] Options screen (?)

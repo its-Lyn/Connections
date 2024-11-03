@@ -24,12 +24,16 @@ static void quit_pressed(component* c, game_data* data) {
 }
 
 static void retry_pressed(component* c, game_data* data) {
+	data->score = 0;
+
 	data->is_paused = false;
 	data->can_pause = true;
 	scene_change(data->main_scene, game_scene_create(data));
 }
 
 static void main_menu_pressed(component* c, game_data* data) {
+	data->score = 0;
+
 	data->is_paused = false;
 	data->can_pause = false;
 	scene_change(data->main_scene, main_menu_create(data));
@@ -60,15 +64,29 @@ scene* end_screen_create(game_data* data) {
 	entity_add_component(ui_layer, text_button_create("Main Menu", (Vector2){ (data->game_size.x - main_menu_measure.x) / 2, data->game_size.y - desktop_measure.y - main_menu_measure.y - GAP * 2 }, main_menu_pressed));
 	entity_add_component(ui_layer, text_button_create("Quit To Desktop", (Vector2){ (data->game_size.x - desktop_measure.x) / 2, data->game_size.y - desktop_measure.y - GAP }, quit_pressed));
 
+	// Calculate high score
+	if (data->score > data->high_score)
+		data->high_score = data->score;
+
 	size_t text_len = snprintf(NULL, 0, "Score: %d", data->score); // size is 0 so we dont actually print anything
 	char* score_text = malloc(text_len + 1); // + 1 for null terminator
 	snprintf(score_text, text_len + 1, "Score: %d", data->score);
 	score_text[text_len] = '\0'; // null terminator
 
 	Vector2 score_measure = MeasureTextEx(font, score_text, 10, 1);
-	entity_add_component(ui_layer, label_create(score_text, font, (Vector2){(data->game_size.x - score_measure.x)/2, (data->game_size.y - score_measure.y)/2}, 10, COLOR_BEIGE));
+	entity_add_component(ui_layer, label_create(score_text, font, (Vector2){(data->game_size.x - score_measure.x)/2, ((data->game_size.y - score_measure.y)/2) - 5}, 10, COLOR_BEIGE));
 
 	free(score_text);
+
+	size_t s_text_len = snprintf(NULL, 0, "High Score: %d", data->high_score); // size is 0 so we dont actually print anything
+	char* s_score_text = malloc(s_text_len + 1); // + 1 for null terminator
+	snprintf(s_score_text, s_text_len + 1, "High Score: %d", data->high_score);
+	s_score_text[s_text_len] = '\0'; // null terminator
+
+	Vector2 s_score_measure = MeasureTextEx(font, s_score_text, 10, 1);
+	entity_add_component(ui_layer, label_create(s_score_text, font, (Vector2){(data->game_size.x - s_score_measure.x)/2, ((data->game_size.y - s_score_measure.y)/2) + 5}, 10, COLOR_BEIGE));
+
+	free(s_score_text);
 
 	scene_add_entity(s, ui_layer);
 

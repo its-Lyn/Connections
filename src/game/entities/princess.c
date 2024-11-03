@@ -40,6 +40,12 @@ void on_collided(scene* s, component* self, component* other, game_data* data) {
 		data->princess_iframe->timer.timer = 0;
 		data->princess_iframe->timer.enabled = true;
 
+		// Begin flash
+		data->princess_flash_sprite->animated_spritesheet.visible  = true;
+		data->princess_normal_sprite->animated_spritesheet.visible = false;
+
+		data->princess_flash_timer->timer.enabled = true;
+
 		// knockback
 		Vector2 dir = Vector2Normalize(Vector2Subtract(self->owner->pos, other->owner->pos));
 		self->owner->vel = Vector2Scale(dir, PRINCESS_KNOCKBACK);
@@ -48,10 +54,26 @@ void on_collided(scene* s, component* self, component* other, game_data* data) {
 
 void on_iframe_time_out(component* _timer, game_data* data) {}
 
+void on_flash_time_out(component* c, game_data* data) {
+	data->princess_flash_sprite->animated_spritesheet.visible  = false;
+	data->princess_normal_sprite->animated_spritesheet.visible = true;
+}
+
 entity* princess_create(game_data* data, scene* s, Vector2 position, entity* player) {
 	entity* princess = entity_create(position, PRINCESS_SPEED);
 
-	entity_add_component(princess, create_animated_spritesheet(0.25f, (Vector2){2, 1}, (Vector2){-2, -4}, false, LoadTexture("assets/princess.png"), 0.0f, (Vector2){0, 0}));
+	// SpriteSheet Data.
+	data->princess_normal_sprite = create_animated_spritesheet(0.25f, (Vector2){2, 1}, (Vector2){-2, -4}, false, LoadTexture("assets/princess.png"), 0.0f, (Vector2){0, 0});
+	data->princess_flash_sprite  = create_animated_spritesheet(0.25f, (Vector2){2, 1}, (Vector2){-2, -4}, false, LoadTexture("assets/princess_flash.png"), 0.0f, (Vector2){0, 0});
+	data->princess_flash_sprite->animated_spritesheet.visible = false;
+
+	entity_add_component(princess, data->princess_normal_sprite);
+	entity_add_component(princess, data->princess_flash_sprite);
+
+	// Flash timer
+	data->princess_flash_timer = timer_engine_create(0.15f, false, true, on_flash_time_out);
+	entity_add_component(princess, data->princess_flash_timer);
+
 	entity_add_component(princess, connection_create(player, COLOR_BROWN, 28.0f, 8.0f));
 	entity_add_component(princess, princess_move_create(princess, player));
 

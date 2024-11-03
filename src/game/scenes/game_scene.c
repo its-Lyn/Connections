@@ -30,6 +30,8 @@ static void resume_pressed(component* c, game_data* data) {
 }
 
 static void main_menu_pressed(component* c, game_data* data) {
+	data->score = 0;
+
 	data->is_paused = false;
 	data->can_pause = false;
 	scene_change(data->main_scene, main_menu_create(data));

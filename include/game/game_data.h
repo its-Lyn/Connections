@@ -33,6 +33,11 @@ typedef struct game_data {
 	Texture2D waves_texture;
 	int waves_frame_h;
 
+	int score;
+	int drawn_score;
+	int score_measure;
+	char* score_text;
+
 	RenderTexture2D renderer;
 
 	Vector2 game_size;

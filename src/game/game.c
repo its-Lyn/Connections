@@ -36,6 +36,12 @@ void init(game_data* data) {
 	data->waves_texture = LoadTexture("assets/waves.png");
 	data->waves_frame_h = data->waves_texture.height / ENEMY_SPAWN_WAVE_COUNT;
 
+	data->score = 0;
+	data->drawn_score = 0;
+	data->score_measure = MeasureText("0", 10);
+	data->score_text = malloc(sizeof(char) * 2);
+	memcpy(data->score_text, "0", 2);
+
 	data->is_paused = false;
 	data->can_pause = false;
 
@@ -102,6 +108,9 @@ void kill(game_data* data) {
 	// Unload textures
 	UnloadTexture(data->bg_texture);
 	UnloadTexture(data->waves_texture);
+
+	// freeing score text
+	free(data->score_text);
 
 	scene_destroy(data->main_scene, data);
 	free(data);

@@ -22,8 +22,10 @@ static void on_collision(scene* s, component* self, component* other, game_data*
 
 	component* health = entity_get_component(self->owner, TYPE_ENEMY_HEALTH);
 	health->enemy_health.hp--;
-	if (health->enemy_health.hp <= 0)
+	if (health->enemy_health.hp <= 0) {
+		data->score += 15;
 		scene_queue_remove(s, self->owner);
+	}
 
 	timer->timer.timer = 0;
 	timer->timer.enabled = true;

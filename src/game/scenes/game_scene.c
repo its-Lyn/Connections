@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include <raylib.h>
 #include <raymath.h>
 
@@ -31,6 +33,10 @@ static void main_menu_pressed(component* c, game_data* data) {
 	data->is_paused = false;
 	data->can_pause = false;
 	scene_change(data->main_scene, main_menu_create(data));
+}
+
+static void on_score_timer_timeout(component* timer, game_data* data) {
+	data->score += 10;
 }
 
 void game_process(scene *game_scene, game_data *data) {
@@ -72,6 +78,10 @@ void game_pre_render(scene* game_scene, game_data* data) {
 #define WAVEBAR_OFFSET_X 1
 #define WAVEBAR_OFFSET_Y 1
 
+#define SCORE_OFFSET_X  -1
+#define SCORE_OFFSET_Y   1
+#define SCORE_FONT_SIZE 10
+
 void game_render(scene* game_scene, game_data* data) {
 	// Health
 	int base_x = HEALTH_OFFSET;
@@ -98,6 +108,26 @@ void game_render(scene* game_scene, game_data* data) {
 	// wave bar
 	Vector2 pos = (Vector2){(int)((data->game_size.x - data->waves_texture.width)/2 + WAVEBAR_OFFSET_X), WAVEBAR_OFFSET_Y};
 	DrawTextureRec(data->waves_texture, (Rectangle){0, data->waves_frame_h * data->waves->wave_manager.curr_wave, data->waves_texture.width, data->waves_frame_h}, pos, WHITE);
+
+	// score
+	if (data->drawn_score != data->score) {
+		// score changed
+		// freeing old text
+		free(data->score_text);
+
+		// update score_text
+		int text_len = snprintf(NULL, 0, "%d", data->score); // wont actually print anything since size is 0
+		data->score_text = malloc(sizeof(text_len) + 1); // +1 for null terminator
+		snprintf(data->score_text, text_len + 1, "%d", data->score);
+		data->score_text[text_len] = '\0'; // setting null terminator (since i used malloc)
+
+		// update measurement
+		data->score_measure = MeasureText(data->score_text, SCORE_FONT_SIZE);
+
+		// update drawn_score
+		data->drawn_score = data->score;
+	}
+	DrawText(data->score_text, data->game_size.x - data->score_measure + SCORE_OFFSET_X, SCORE_OFFSET_Y, SCORE_FONT_SIZE, COLOR_BROWN);
 
 	// pause screen
 	if (data->is_paused) {
@@ -137,6 +167,11 @@ scene* game_scene_create(game_data* data) {
 	entity_add_component(ui_layer, text_button_create("Quit To Desktop", (Vector2){ (data->game_size.x - desktop_measure.x) / 2, 81 }, quit_pressed));
 
 	scene_add_entity(s, ui_layer);
+
+	// score timer
+	entity* score_timer = entity_create((Vector2){0, 0}, 0.0f);
+	entity_add_component(score_timer, timer_engine_create(1.0f, true, false, on_score_timer_timeout));
+	scene_add_entity(s, score_timer);
 
 	return s;
 }

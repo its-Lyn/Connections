@@ -31,25 +31,25 @@ component* wave_manager_create(entity* owner) {
 	};
 	c->wave_manager.waves[1] = (wave_data){
 		.wave_length    = 21.0f,
-		.spawn_time     =  3.0f,
+		.spawn_time     =  3.5f,
 		.double_chance  =  0.2f,
 		.shooter_chance =  0.0f,
 	};
 	c->wave_manager.waves[2] = (wave_data){
 		.wave_length    = 30.0f,
-		.spawn_time     =  2.5f,
+		.spawn_time     =  2.75f,
 		.double_chance  =  0.3f,
 		.shooter_chance =  0.2f,
 	};
 	c->wave_manager.waves[3] = (wave_data){
 		.wave_length    = 30.0f,
-		.spawn_time     =  2.0f,
+		.spawn_time     =  2.5f,
 		.double_chance  =  0.4f,
 		.shooter_chance =  0.3f,
 	};
 	c->wave_manager.waves[4] = (wave_data){
 		.wave_length    = 0.0f, // last wave is infinite
-		.spawn_time     = 1.0f,
+		.spawn_time     = 1.25f,
 		.double_chance  = 0.5f,
 		.shooter_chance = 0.4f,
 	};
